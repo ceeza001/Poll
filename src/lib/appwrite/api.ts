@@ -14,8 +14,10 @@ export async function signInAccount(user: { email: string; password: string }) {
     return session;
   } catch (error) {
     console.log(error);
+    throw error; // Throw an error with a message
   }
 }
+
 
 // ============================== GET ACCOUNT
 export async function getAccount() {
