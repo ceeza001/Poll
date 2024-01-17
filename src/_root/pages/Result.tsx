@@ -8,7 +8,6 @@ const Result = () => {
   const {
     data: candidates,
     isLoading: isCandidateLoading,
-    isError: isErrorCandidates,
   } = useGetCandidates(10);
   
   return (

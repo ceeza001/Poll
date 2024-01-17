@@ -8,16 +8,12 @@ const RootLayout = () => {
   
   return (
     <>
-      {user.onboarded = true ? (
-        <div className="w-full md:flex">
-          <Topbar />
-          <section className="flex flex-1 h-full">
-            <Outlet />
-          </section>
-        </div>
-      ) : (
-        <Navigate to="/onboarding" />
-      )}
+      <div className="w-full md:flex">
+        <Topbar />
+        <section className="flex flex-1 h-full">
+          <Outlet />
+        </section>
+      </div>
     </>
   );
 };

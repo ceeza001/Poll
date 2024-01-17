@@ -1,7 +1,6 @@
-import { ID, Query } from "appwrite";
+import { Query } from "appwrite";
 
-import { appwriteConfig, account, databases, storage, avatars } from "./config";
-import { IUpdatePost, INewPost, INewUser, IUpdateUser, INewCommunity } from "@/types";
+import { appwriteConfig, account, databases } from "./config";
 
 // ============================================================
 // AUTH
@@ -94,7 +93,7 @@ export async function getUserById(userId: string) {
   try {
     const user = await databases.getDocument(
       appwriteConfig.databaseId,
-      appwriteConfig.poetCollectionId,
+      appwriteConfig.voterCollectionId,
       userId
     );
 

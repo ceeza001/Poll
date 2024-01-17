@@ -1,17 +1,12 @@
 import { useEffect } from "react";
-import { Link, useNavigate, NavLink, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-import { INavLink } from "@/types";
-import { Loader } from "@/components/shared/";
-import { Button } from "../ui/button";
-import { useUserContext, INITIAL_USER } from "@/context/AuthContext";
-import { useSignOutAccount } from "@/lib/react-query/queries";
+import { useUserContext } from "@/context/AuthContext";
 
 const Topbar = () => {
   const navigate = useNavigate();
-   const { user, setUser, setIsAuthenticated, isLoading } = useUserContext();
-  const { mutate: signOut, isSuccess } = useSignOutAccount();
-
+   const { user } = useUserContext();
+  
   useEffect(() => {
     if (isSuccess) navigate(0);
   }, [isSuccess]);
