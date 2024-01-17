@@ -1,7 +1,8 @@
+import { useState } from "react"
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Link, useNavigate, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -16,10 +17,11 @@ import { useUserContext } from "@/context/AuthContext";
 const SigninForm = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { isAuthenticated, checkAuthUser, isLoading: isUserLoading } = useUserContext();
+  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
+  const [errorMessage, setErrorMessage] = useState("");
   
   // Query
-  const { mutateAsync: signInAccount, isPending } = useSignInAccount();
+  const { mutateAsync: signInAccount } = useSignInAccount();
 
   const form = useForm<z.infer<typeof SigninValidation>>({
     resolver: zodResolver(SigninValidation),
@@ -30,42 +32,48 @@ const SigninForm = () => {
   });
 
   const handleSignin = async (user: z.infer<typeof SigninValidation>) => {
-    const session = await signInAccount(user);
+    try {
+      const session = await signInAccount(user);
 
-    if (!session) {
-      toast({ title: "Login failed. Please try again." });
+      if (!session) {
+        toast({ title: "Login failed. Please try again." });
+        return;
+      }
 
-      return;
-    }
+      setErrorMessage(""); // Reset error message if successful login
+      const isLoggedIn = await checkAuthUser();
+      console.log(isLoggedIn);
 
-    const isLoggedIn = await checkAuthUser();
-
-    if (isLoggedIn) {
-      form.reset();
-
-      navigate("/");
-    } else {
-      toast({ title: "Login failed. Please try again.", });
-
-      return;
+      if (isLoggedIn) {
+        form.reset();
+        navigate("/profile");
+      } else {
+        toast({ title: "Login failed. Please try again." });
+      }
+    } catch (error) {
+      // Use assertion to tell TypeScript the type of error
+      setErrorMessage((error as Error)?.message || "Unknown error");
+      toast({ title: (error as Error)?.message || "Unknown error" });
     }
   };
-
-  if (isAuthenticated) {
-    return <Navigate to="/" />;
-  }
-
+  
   return (
     <Form {...form}>
-      <div className="sm:w-420 flex-center flex-col">
-        <h1 className="h1-bold">FC Poll</h1>
-
+      <div className="p-[1rem] sm:max-w-420 flex-center flex-col">
+        <h2 className="hover-font h1-bold">FC Poll</h2>
+        
         <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">
           Log in to your account
         </h2>
-        <p className="text-gray-500 small-medium md:base-regular mt-2">
-          Welcome back! Please enter your details.
-        </p>
+        {!errorMessage ?
+          <p className="text-gray-500 small-medium md:base-regular mt-2">
+            Welcome! Please enter your details.
+          </p>
+        :
+          <p className="text-red text-center mx-auto small-medium md:base-regular mt-2">
+            {errorMessage}
+          </p>
+        }
         <form
           onSubmit={form.handleSubmit(handleSignin)}
           className="flex flex-col gap-5 w-full mt-4">
@@ -78,7 +86,7 @@ const SigninForm = () => {
                 <FormControl>
                   <Input type="text" className="shad-input" {...field} />
                 </FormControl>
-                <FormMessage className="shad-form_message" />
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -88,17 +96,17 @@ const SigninForm = () => {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="shad-form_label">Password</FormLabel>
+                <FormLabel className="shad-form_label">Passcode</FormLabel>
                 <FormControl>
                   <Input type="password" className="shad-input" {...field} />
                 </FormControl>
-                <FormMessage className="shad-form_message" />
+                <FormMessage />
               </FormItem>
             )}
           />
 
           <Button type="submit" className="shad-button_primary">
-            {isPending || isUserLoading ? (
+            {status === 'loading' || isUserLoading ? (
               <div className="flex-center gap-2">
                 <Loader /> Loading...
               </div>
@@ -106,15 +114,6 @@ const SigninForm = () => {
               "Log in"
             )}
           </Button>
-
-          <p className="text-small-regular text-light-2 text-center mt-2">
-            Don&apos;t have an account?
-            <Link
-              to="/sign-up"
-              className="text-primary-500 text-small-semibold ml-1">
-              Sign up
-            </Link>
-          </p>
         </form>
       </div>
     </Form>
