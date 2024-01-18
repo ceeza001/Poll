@@ -17,7 +17,7 @@ const RootLayout = () => {
           </section>
         </div>
       ) : (
-        <Navigate to="/sign-in" />
+        <Navigate to="/sign-up" />
       )}
     </>
   );
