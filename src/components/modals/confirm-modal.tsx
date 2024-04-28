@@ -1,18 +1,7 @@
-import { useState, useEffect} from "react";
+import { useState} from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import {
   Form,
   FormControl,
@@ -24,7 +13,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
 
 interface ConfirmModalProps {
-  children: React.ReactNode;
   onConfirm: () => void;
 }
 
@@ -33,7 +21,6 @@ const formSchema = z.object({
 });
 
 const ConfirmModal: React.FC<ConfirmModalProps> = ({
-  children,
   onConfirm
 }: ConfirmModalProps) => {
   const [modal, setModal] = useState(false);
@@ -44,7 +31,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
     },
   });
 
-  const { isSubmitting, isValid } = form.formState;
+  const { isSubmitting } = form.formState;
   
   return (
     <div className="w-full">

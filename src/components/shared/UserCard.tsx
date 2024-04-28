@@ -1,7 +1,7 @@
-import { useState, useEffect} from "react";
+import { useState } from "react";
 import { Models } from "appwrite";
+import * as z from "zod";
 
-import { Button } from "../ui/button";
 import {
   useVote,
   useGetVoters
@@ -13,6 +13,9 @@ type UserCardProps = {
   candidate: Models.Document;
 };
 
+const formSchema = z.object({
+  key: z.string().min(8),
+});
 const UserCard = ({ candidate }: UserCardProps) => {
   const [voted, setVoted] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -25,7 +28,7 @@ const UserCard = ({ candidate }: UserCardProps) => {
   const handleVote = async (value: z.infer<typeof formSchema>) => {
   if (!voted) {
     // Check if the value.key matches any voter's accountId
-    const matchingVoters = voters.documents.filter((voter) => voter.accountId === value.key);
+    const matchingVoters = voters?.documents.filter((voter) => voter.accountId === value.key);
     console.log(matchingVoters[0]);
     if (matchingVoters.length > 0) {
       // Check if the first matching voter has not voted for any candidate

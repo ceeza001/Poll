@@ -46,36 +46,20 @@ const Vote = () => {
         </div>
       </div>
 
-      {currentUser.candidates && currentUser.candidates.length !== 0 ? ( 
-        <div className="p-[1rem] bg-dark-2 border-dark-4 border rounded-lg">
-          <div className="my-2 mb-6 flex gap-4 items-center">
-            <img
-              src="/assets/icons"
-              alt="profile"
-              className="rounded-full w-[5rem]"
-            />
-            <span>
-              <p>{currentUser.candidates.name}</p>
-              <p>{currentUser.candidates.department}</p>
-            </span>
-          </div>
-          <h2>You voted {currentUser.candidates?.name} for the position of faculty rep </h2>
-        </div>
-      ) : (
-        <div className="flex flex-wrap gap-9 w-full max-w-5xl">
+      <div className="flex flex-wrap gap-9 w-full max-w-5xl">
           {isCandidateLoading && !candidates ? (
             <Loader />
           ) : (
             <ul className="w-full grid 2xl:grid-cols-2 gap-6">
               {candidates?.documents.map((candidate) => (
                 <li key={candidate?.$id}>
-                  <UserCard candidate={candidate} voter={currentUser} />
+                  <UserCard candidate={candidate} />
                 </li>
               ))}
             </ul>
           )}
         </div>
-      )}
+      
 
       <div className="mt-8 flex w-full gap-4">
             <Link 
