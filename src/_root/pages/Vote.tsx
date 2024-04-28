@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { useGetCandidates, useGetCurrentUser } from "@/lib/react-query/queries";
+import { useGetCandidates } from "@/lib/react-query/queries";
 
 import { Loader, UserCard } from "@/components/shared";
 
@@ -16,7 +16,7 @@ const Vote = () => {
     isError: isErrorCandidates,
   } = useGetCandidates(10);
 
-  const currentUser = {};
+  
   if (isErrorCandidates) {
     return (
       <div className="flex flex-1">
@@ -24,14 +24,6 @@ const Vote = () => {
           <p className="body-medium text-light-1">Something bad happened</p>
         </div>
         
-      </div>
-    );
-  }
-
-  if (!currentUser) {
-    return (
-      <div className="flex-center h-[80vh] w-screen">
-        <Loader />
       </div>
     );
   }
