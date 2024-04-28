@@ -13,7 +13,6 @@ import {
   vote,
   getUserById,
 } from "@/lib/appwrite/api";
-import { INewUser } from "@/types";
 
 // ============================================================
 // AUTH QUERIES
