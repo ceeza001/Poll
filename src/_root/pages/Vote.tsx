@@ -16,8 +16,7 @@ const Vote = () => {
     isError: isErrorCandidates,
   } = useGetCandidates(10);
 
-  const { data: currentUser } = useGetCurrentUser();
-
+  const currentUser = {};
   if (isErrorCandidates) {
     return (
       <div className="flex flex-1">
@@ -59,7 +58,7 @@ const Vote = () => {
         <div className="p-[1rem] bg-dark-2 border-dark-4 border rounded-lg">
           <div className="my-2 mb-6 flex gap-4 items-center">
             <img
-              src="/assets/images/profile.jpg"
+              src="/assets/icons"
               alt="profile"
               className="rounded-full w-[5rem]"
             />
@@ -86,10 +85,10 @@ const Vote = () => {
         </div>
       )}
 
-      <div className="mt-8 flex flex-col md:flex-row w-full gap-4">
+      <div className="mt-8 flex w-full gap-4">
             <Link 
               to="/vote" 
-              className="flex items-center gap-6 body-bold bg-primary-500 w-full p-[0.8rem] rounded-lg">
+              className="flex items-center gap-6 body-bold bg-dark-2 border border-dark-4 w-full p-[0.8rem] rounded-lg">
               <img 
                 src="/assets/icons/vote.svg"
                 alt="vote" 

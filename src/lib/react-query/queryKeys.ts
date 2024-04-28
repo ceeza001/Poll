@@ -6,7 +6,8 @@ export enum QUERY_KEYS {
   GET_CURRENT_USER = "getCurrentUser",
   GET_USERS = "getUsers",
   GET_USER_BY_ID = "getUserById",
-
+  GET_VOTERS = "getVoters",
+  
   // COMMUNITY KEYS
   GET_COMMUNITY_BY_ID = "getCommunityById",
   GET_INFINITE_COMMUNITIES = "getInfiniteCommunities",

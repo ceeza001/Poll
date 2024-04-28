@@ -4,44 +4,56 @@ import { Models } from "appwrite";
 import { Button } from "../ui/button";
 import {
   useVote,
+  useGetVoters
 } from "@/lib/react-query/queries";
+import ConfirmModal from "@/components/modals/confirm-modal";
 
 
 type UserCardProps = {
   candidate: Models.Document;
-  voter: Models.Document;
 };
 
-const UserCard = ({ candidate, voter }: UserCardProps) => {
+const UserCard = ({ candidate }: UserCardProps) => {
   const [voted, setVoted] = useState(false);
-  
+  const [errorMessage, setErrorMessage] = useState("");
   const { mutate: vote } = useVote();
-  
-  useEffect(() => {
-    if (voter.candidates && voter.candidates.length !== 0) {
-      setVoted(true);
+  const {
+    data: voters,
+  } = useGetVoters(75);
+
+
+  const handleVote = async (value: z.infer<typeof formSchema>) => {
+  if (!voted) {
+    // Check if the value.key matches any voter's accountId
+    const matchingVoters = voters.documents.filter((voter) => voter.accountId === value.key);
+    console.log(matchingVoters[0]);
+    if (matchingVoters.length > 0) {
+      // Check if the first matching voter has not voted for any candidate
+      const validVoters = matchingVoters[0].candidates === null;
+      if (validVoters) {
+        // Allow the user to vote using the $id of the first matching voter
+        vote({ voterId: matchingVoters[0].$id, candidateId: candidate.$id });
+        setVoted(true);
+        setErrorMessage("");
+      } else {
+        // Display an error message or handle the case where the user has already voted
+        setErrorMessage('You are not allowed to vote. You have already voted.');
+        setVoted(false);
+      }
+    } else {
+      // Display an error message or handle the case where the user is not allowed to vote
+      setErrorMessage('You are not allowed to vote. Incorrect key.');
+      setVoted(false);
     }
-  }, [voter]);
+  }
+};
 
-
-  const handleVote = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.stopPropagation();
-
-    if (!voted) {
-      vote({ voterId: voter.$id, candidateId: candidate.$id });
-      setVoted(true);
-      window.location.reload();
-    }
-  };
-  
   return (
     <div className="user-card">
       <img
-        src={candidate.imageUrl || "/assets/images/profile.jpg"}
+        src={`/assets/candidates/${candidate.imageUrl}.jpg`}
         alt="candidate"
-        className="rounded-full w-[9rem]"
+        className="rounded-full w-[9rem] h-[9rem]"
       />
 
       <div className="text-text-color w-full flex flex-col items-start gap-1">
@@ -51,24 +63,19 @@ const UserCard = ({ candidate, voter }: UserCardProps) => {
             {candidate.name}
           </span>
         </p>
-        <p className="flex gap-2 items-center">
-          Department: 
-          <span className="small-regular text-center line-clamp-1">
-            {candidate.department}
-          </span>
-        </p>
+        
         <p className="mt-4 text-gray-500 subtle-semibold">
-          {candidate.manifesto}
+          In our academic community, every voice matters, and we commit to fostering engagement through inclusive voting.
         </p>
       </div>
 
-      <Button
-        onClick={(e) => handleVote (e)}
-        className="w-full shad-button_primary px-5"
-        disabled={voted}
-      >
-        {voted ? "user has voted" : "Vote"}
-      </Button>
+      <ConfirmModal onConfirm={handleVote} />
+      {voted && (
+        <p className="small-regular text-green-500">Voted Successfully</p>
+      )}
+      {errorMessage && (
+        <p className="small-regular text-red">{errorMessage}</p>
+      )}
     </div>
   );
 };

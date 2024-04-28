@@ -5,17 +5,27 @@ import {
 
 import { QUERY_KEYS } from "@/lib/react-query/queryKeys";
 import {
+  createUserAccount,
   signInAccount,
   getCurrentUser,
   signOutAccount,
   getCandidates,
+  getVoters,
+  vote,
   getUserById,
-  vote
+  vote,
 } from "@/lib/appwrite/api";
+import { INewUser } from "@/types";
 
 // ============================================================
 // AUTH QUERIES
 // ============================================================
+
+export const useCreateUserAccount = () => {
+  return useMutation({
+    mutationFn: (user: INewUser) => createUserAccount(user),
+  });
+};
 
 export const useSignInAccount = () => {
   return useMutation({
@@ -60,5 +70,12 @@ export const useVote = () => {
   return useMutation({
     mutationFn: ({ voterId, candidateId }: { voterId: string; candidateId: string }) =>
       vote(voterId, candidateId),
+  });
+};
+
+export const useGetVoters = (limit?: number) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_VOTERS],
+    queryFn: () => getVoters(limit),
   });
 };

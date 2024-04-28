@@ -9,7 +9,7 @@ const Topbar = () => {
     <section className="topbar">
       <div className="flex-between py-4 px-5">
         <Link to="/" className="flex gap-3 items-center h3-bold">
-          FC poll
+          Florence Nightingale
         </Link>
 
         <div className="flex gap-4">

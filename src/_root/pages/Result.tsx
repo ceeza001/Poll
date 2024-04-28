@@ -32,16 +32,16 @@ const Result = () => {
                 <li key={candidate?.$id}>
                   <div className="user-card">
                     <img
-                      src="/assets/images/profile.jpg"
+                      src={`/assets/candidates/${candidate.imageUrl}.jpg`}
                       alt="profile"
-                      className="rounded-full w-[8rem]"
+                      className="rounded-full w-[8rem] h-[8rem]"
                     />
                     <span className="text-center">
                       <p>{candidate.name}</p>
                       <p>{candidate.department}</p>
                       <span className="justify-center flex gap-2 items-center">
-                        <p>{candidate.voters.length || 0}</p> 
-                        vote{candidate.voters.length !== 1 && "s"}
+                        <p>{candidate.users.length || 0}</p> 
+                        vote{candidate.users.length !== 1 && "s"}
                       </span>
                     </span>
                   </div>
@@ -51,10 +51,10 @@ const Result = () => {
           )}
       </div>
 
-      <div className="mt-8 flex flex-col md:flex-row w-full gap-4">
+      <div className="mt-8 flex w-full gap-4">
             <Link 
               to="/vote" 
-              className="flex items-center gap-6 body-bold bg-primary-500 w-full p-[0.8rem] rounded-lg">
+              className="flex items-center gap-6 body-bold bg-dark-2 border border-dark-4 w-full p-[0.8rem] rounded-lg">
               <img 
                 src="/assets/icons/vote.svg"
                 alt="vote" 
@@ -73,7 +73,7 @@ const Result = () => {
               <p>Results</p>
             </Link>
           </div>
-
+      
     </div>
   )
 }
