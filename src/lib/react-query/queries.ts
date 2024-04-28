@@ -13,7 +13,6 @@ import {
   getVoters,
   vote,
   getUserById,
-  vote,
 } from "@/lib/appwrite/api";
 import { INewUser } from "@/types";
 
