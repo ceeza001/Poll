@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
 
 interface ConfirmModalProps {
-  onConfirm: () => void;
+  onConfirm: (value: z.infer<typeof formSchema>) => void;
 }
 
 const formSchema = z.object({
