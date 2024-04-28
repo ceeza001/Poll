@@ -30,12 +30,12 @@ const UserCard = ({ candidate }: UserCardProps) => {
     // Check if the value.key matches any voter's accountId
     const matchingVoters = voters?.documents.filter((voter) => voter.accountId === value.key);
     console.log(matchingVoters[0]);
-    if (matchingVoters.length > 0) {
+    if (matchingVoters?.length > 0) {
       // Check if the first matching voter has not voted for any candidate
-      const validVoters = matchingVoters[0].candidates === null;
+      const validVoters = matchingVoters[0]?.candidates === null;
       if (validVoters) {
         // Allow the user to vote using the $id of the first matching voter
-        vote({ voterId: matchingVoters[0].$id, candidateId: candidate.$id });
+        vote({ voterId: matchingVoters[0]?.$id, candidateId: candidate.$id });
         setVoted(true);
         setErrorMessage("");
       } else {
