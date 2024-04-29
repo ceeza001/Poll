@@ -1,20 +1,16 @@
 import { useState, useEffect } from "react";
 import { Models } from "appwrite";
 
-import {
-  useVote,
-} from "@/lib/react-query/queries";
-
+import { useVote } from "@/lib/react-query/queries";
 import { Button } from "@/components/ui";
 
-
 type UserCardProps = {
-  candidate: Models.Document;
+  candidate: Models.Document | null; // Allow candidate to be null initially
 };
 
 const UserCard = ({ candidate }: UserCardProps) => {
   const [voted, setVoted] = useState(false);
-  const [votes, setVotes] = useState(candidate?.votes);
+  const [votes, setVotes] = useState<string[]>([]); // Initialize votes as an empty array of strings
   const { mutate: vote } = useVote();
 
   const currentVotes = candidate?.votes || [];
@@ -26,11 +22,11 @@ const UserCard = ({ candidate }: UserCardProps) => {
       setVoted(true);
     }
   }, []);
-  
+
   const handleVote = async () => {
-    if (!voted) {
+    if (!voted && candidate) {
       const updatedVotes = [...currentVotes, '1']; // '1' is the voter's ID, replace it with the actual voter ID
-    
+
       // Update the votes state with the updated votes array
       setVotes(updatedVotes);
 
@@ -45,38 +41,40 @@ const UserCard = ({ candidate }: UserCardProps) => {
     }
   };
 
-
   return (
     <div className="user-card">
-      <img
-        src={`/assets/candidates/${candidate?.imageUrl}.jpg`}
-        alt="candidate"
-        className="rounded-lg w-full aspect-square"
-      />
+      {candidate && (
+        <>
+          <img
+            src={`/assets/candidates/${candidate.imageUrl}.jpg`}
+            alt="candidate"
+            className="rounded-lg w-full aspect-square"
+          />
 
-      <div className="text-text-color w-full flex flex-col items-start gap-1">
-        <h3 className="h3-bold">
-           {candidate?.name}
-        </h3>
+          <div className="text-text-color w-full flex flex-col items-start gap-1">
+            <h3 className="h3-bold">
+               {candidate.name}
+            </h3>
 
-        <p className="base-semibold">
-        Total votes: {votes?.length || 0}
-        </p>
-        
-        <p className="mt-4 text-gray-500 subtle-semibold">
-          In our academic community, every voice matters, and we commit to fostering engagement through inclusive voting.
-        </p>
-        
-      </div>
+            <p className="base-semibold">
+              Total votes: {votes.length}
+            </p>
 
-      <Button 
-        onClick={handleVote}
-        className="w-full shad-button_primary px-5"
-        disabled={voted}
-      >
-        {voted ? 'Already Voted' : 'Vote'}
-      </Button>
-      
+            <p className="mt-4 text-gray-500 subtle-semibold">
+              In our academic community, every voice matters, and we commit to fostering engagement through inclusive voting.
+            </p>
+
+          </div>
+
+          <Button
+            onClick={handleVote}
+            className="w-full shad-button_primary px-5"
+            disabled={voted}
+          >
+            {voted ? 'Already Voted' : 'Vote'}
+          </Button>
+        </>
+      )}
     </div>
   );
 };
