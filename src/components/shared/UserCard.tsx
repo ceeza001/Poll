@@ -10,12 +10,12 @@ type UserCardProps = {
 
 const UserCard = ({ candidate }: UserCardProps) => {
   const [voted, setVoted] = useState(false);
-  const [votes, setVotes] = useState([]); // Initialize with an empty array
+  const [votes, setVotes] = useState<string[]>([]);
   const { mutate: vote } = useVote();
 
   useEffect(() => {
     if (candidate) {
-      setVotes(candidate.votes || []); // Update votes when candidate changes
+      setVotes(candidate.votes || []);
     }
     // Retrieve votes from local storage when component mounts
     const voteState = localStorage.getItem("voted");
@@ -26,19 +26,16 @@ const UserCard = ({ candidate }: UserCardProps) => {
 
   const handleVote = async () => {
     if (!voted && candidate) {
-      const updatedVotes = [...votes, '1']; // '1' is the voter's ID, replace it with the actual voter ID
-
-      // Update the votes state with the updated votes array
-      setVotes(updatedVotes);
-
-      // Perform the vote mutation
-      vote({ votes: updatedVotes, candidateId: candidate.$id });
-
-      // Set voted status to true
-      setVoted(true);
-
-      // Set voted status to true in local storage
-      localStorage.setItem('voted', candidate.$id);
+      setVotes(prevVotes => {
+        const updatedVotes = [...prevVotes, '1']; // '1' is the voter's ID, replace it with the actual voter ID
+        // Perform the vote mutation
+        vote({ votes: updatedVotes, candidateId: candidate.$id });
+        // Set voted status to true
+        setVoted(true);
+        // Set voted status to true in local storage
+        localStorage.setItem('voted', candidate.$id);
+        return updatedVotes;
+      });
     }
   };
 
