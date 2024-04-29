@@ -10,7 +10,7 @@ type UserCardProps = {
 
 const UserCard = ({ candidate }: UserCardProps) => {
   const [voted, setVoted] = useState(false);
-  const [votes, setVotes] = useState<string[]>([]); // Initialize with an empty array
+  const [votes, setVotes] = useState([]); // Initialize with an empty array
   const { mutate: vote } = useVote();
 
   useEffect(() => {
