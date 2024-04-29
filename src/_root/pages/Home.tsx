@@ -1,12 +1,6 @@
 import { Link } from "react-router-dom";
 
-import { useGetCandidates } from "@/lib/react-query/queries";
-
 const Home = () => {
-  const {
-    data: candidates
-  } = useGetCandidates(10);
-
   
   return (
     <div className="flex flex-1">

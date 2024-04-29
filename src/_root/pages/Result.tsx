@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 import { useGetCandidates } from "@/lib/react-query/queries";
 
 import { Loader } from "@/components/shared";
