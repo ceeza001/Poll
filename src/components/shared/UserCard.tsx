@@ -5,15 +5,16 @@ import { useVote } from "@/lib/react-query/queries";
 import { Button } from "@/components/ui";
 
 type UserCardProps = {
-  candidate: Models.Document | null; // Allow candidate to be null initially
+  candidate: Models.Document | null;
 };
 
 const UserCard = ({ candidate }: UserCardProps) => {
   const [voted, setVoted] = useState(false);
-  const [votes, setVotes] = useState<string[]>([]); // Initialize votes as an empty array of strings
+  const [votes, setVotes] = useState<string[]>(() => {
+    // Initialize votes with an empty array if candidate exists, otherwise use an empty array
+    return candidate?.votes || [];
+  });
   const { mutate: vote } = useVote();
-
-  const currentVotes = candidate?.votes || [];
 
   useEffect(() => {
     // Retrieve votes from local storage when component mounts
@@ -25,7 +26,7 @@ const UserCard = ({ candidate }: UserCardProps) => {
 
   const handleVote = async () => {
     if (!voted && candidate) {
-      const updatedVotes = [...currentVotes, '1']; // '1' is the voter's ID, replace it with the actual voter ID
+      const updatedVotes = [...votes, '1']; // '1' is the voter's ID, replace it with the actual voter ID
 
       // Update the votes state with the updated votes array
       setVotes(updatedVotes);
