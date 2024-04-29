@@ -1,84 +1,82 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Models } from "appwrite";
-import * as z from "zod";
 
 import {
   useVote,
-  useGetVoters
 } from "@/lib/react-query/queries";
-import ConfirmModal from "@/components/modals/confirm-modal";
+
+import { Button } from "@/components/ui";
 
 
 type UserCardProps = {
   candidate: Models.Document;
 };
 
-const formSchema = z.object({
-  key: z.string().min(8),
-});
 const UserCard = ({ candidate }: UserCardProps) => {
   const [voted, setVoted] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [votes, setVotes] = useState(candidate?.votes);
   const { mutate: vote } = useVote();
-  const {
-    data: voters,
-  } = useGetVoters(75);
 
+  const currentVotes = candidate?.votes || [];
 
-  const handleVote = async (value: z.infer<typeof formSchema>) => {
-  if (!voted) {
-    // Check if the value.key matches any voter's accountId
-    const matchingVoters = voters?.documents.filter((voter) => voter.accountId === value.key);
-    
-    if (matchingVoters && matchingVoters?.length > 0) {
-      // Check if the first matching voter has not voted for any candidate
-      const validVoters = matchingVoters[0].candidates === null;
-      if (validVoters) {
-        // Allow the user to vote using the $id of the first matching voter
-        vote({ voterId: matchingVoters[0].$id, candidateId: candidate.$id });
-        setVoted(true);
-        setErrorMessage("");
-      } else {
-        // Display an error message or handle the case where the user has already voted
-        setErrorMessage('You are not allowed to vote. You have already voted.');
-        setVoted(false);
-      }
-    } else {
-      // Display an error message or handle the case where the user is not allowed to vote
-      setErrorMessage('You are not allowed to vote. Incorrect key.');
-      setVoted(false);
+  useEffect(() => {
+    // Retrieve votes from local storage when component mounts
+    const voteState = localStorage.getItem("voted");
+    if (voteState !== null) {
+      setVoted(true);
     }
-  }
-};
+  }, []);
+  
+  const handleVote = async () => {
+    if (!voted) {
+      const updatedVotes = [...currentVotes, '1']; // '1' is the voter's ID, replace it with the actual voter ID
+    
+      // Update the votes state with the updated votes array
+      setVotes(updatedVotes);
+
+      // Perform the vote mutation
+      vote({ votes: updatedVotes, candidateId: candidate.$id });
+
+      // Set voted status to true
+      setVoted(true);
+
+      // Set voted status to true in local storage
+      localStorage.setItem('voted', candidate.$id);
+    }
+  };
+
 
   return (
     <div className="user-card">
       <img
-        src={`/assets/candidates/${candidate.imageUrl}.jpg`}
+        src={`/assets/candidates/${candidate?.imageUrl}.jpg`}
         alt="candidate"
-        className="rounded-full w-[9rem] h-[9rem]"
+        className="rounded-lg w-full aspect-square"
       />
 
       <div className="text-text-color w-full flex flex-col items-start gap-1">
-        <p className="flex gap-2 items-center">
-          Name: 
-          <span className="small-regular text-center line-clamp-1">
-            {candidate.name}
-          </span>
+        <h3 className="h3-bold">
+           {candidate?.name}
+        </h3>
+
+        <p className="base-semibold">
+        Total votes: {votes?.length || 0}
         </p>
         
         <p className="mt-4 text-gray-500 subtle-semibold">
           In our academic community, every voice matters, and we commit to fostering engagement through inclusive voting.
         </p>
+        
       </div>
 
-      <ConfirmModal onConfirm={handleVote} />
-      {voted && (
-        <p className="small-regular text-green-500">Voted Successfully</p>
-      )}
-      {errorMessage && (
-        <p className="small-regular text-red">{errorMessage}</p>
-      )}
+      <Button 
+        onClick={handleVote}
+        className="w-full shad-button_primary px-5"
+        disabled={voted}
+      >
+        {voted ? 'Already Voted' : 'Vote'}
+      </Button>
+      
     </div>
   );
 };

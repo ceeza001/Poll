@@ -1,9 +1,13 @@
 import { Link } from "react-router-dom";
-// import { useToast } from "@/components/ui/use-toast";
+
+import { useGetCandidates } from "@/lib/react-query/queries";
 
 const Home = () => {
-  // const { toast } = useToast();
+  const {
+    data: candidates
+  } = useGetCandidates(10);
 
+  
   return (
     <div className="flex flex-1">
       <div className="home-container">

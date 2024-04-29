@@ -59,8 +59,8 @@ export const useGetUserById = (userId: string) => {
 
 export const useVote = () => {
   return useMutation({
-    mutationFn: ({ voterId, candidateId }: { voterId: string; candidateId: string }) =>
-      vote(voterId, candidateId),
+    mutationFn: ({ votes, candidateId }: { votes: []; candidateId: string }) =>
+      vote(votes, candidateId),
   });
 };
 

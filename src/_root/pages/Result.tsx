@@ -40,8 +40,8 @@ const Result = () => {
                       <p>{candidate.name}</p>
                       <p>{candidate.department}</p>
                       <span className="justify-center flex gap-2 items-center">
-                        <p>{candidate.users.length || 0}</p> 
-                        vote{candidate.users.length !== 1 && "s"}
+                        <p>{candidate.votes.length || 0}</p> 
+                        vote{candidate.votes.length !== 1 && "s"}
                       </span>
                     </span>
                   </div>
@@ -49,31 +49,7 @@ const Result = () => {
               ))}
             </ul>
           )}
-      </div>
-
-      <div className="mt-8 flex w-full gap-4">
-            <Link 
-              to="/vote" 
-              className="flex items-center gap-6 body-bold bg-dark-2 border border-dark-4 w-full p-[0.8rem] rounded-lg">
-              <img 
-                src="/assets/icons/vote.svg"
-                alt="vote" 
-                className="w-[2rem] h-[2rem] invert-white"
-              />
-              <p>Vote</p>
-            </Link>
-            <Link 
-              to="/result" 
-              className="flex items-center gap-6 body-bold bg-dark-2 border border-dark-4 w-full p-[0.8rem] rounded-lg">
-              <img 
-                src="/assets/icons/result.svg"
-                alt="result" 
-                className="w-[2rem] h-[2rem] invert-white"
-              />
-              <p>Results</p>
-            </Link>
-          </div>
-      
+      </div>     
     </div>
   )
 }

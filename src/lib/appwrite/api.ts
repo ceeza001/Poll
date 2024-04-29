@@ -109,14 +109,14 @@ export async function getUserById(userId: string) {
 }
 
 // ============================== VOTE
-export async function vote(voterId: string, candidateId: string) {
+export async function vote(votes: [], candidateId: string) {
   try {
     const updatedVoter = await databases.updateDocument(
       appwriteConfig.databaseId,
-      appwriteConfig.voterCollectionId,
-      voterId,
+      appwriteConfig.candidatesCollectionId,
+      candidateId,
       {
-        candidates: candidateId,
+        votes: votes,
       }
     );
 
