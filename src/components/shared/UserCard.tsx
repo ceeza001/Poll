@@ -9,7 +9,7 @@ type UserCardProps = {
 };
 
 const UserCard = ({ candidate }: UserCardProps) => {
-  const voteList = candidate?.votes.map((vote) => vote);
+  const voteList = candidate?.votes.map((vote: string) => vote);
   const [voted, setVoted] = useState(false);
   const [votes, setVotes] = useState<string[]>(voteList);
   const { mutate: vote } = useVote();
