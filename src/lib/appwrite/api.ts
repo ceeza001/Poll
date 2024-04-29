@@ -109,7 +109,7 @@ export async function getUserById(userId: string) {
 }
 
 // ============================== VOTE
-export async function vote(votes: [], candidateId: string) {
+export async function vote(votes: string[], candidateId: string) {
   try {
     const updatedVoter = await databases.updateDocument(
       appwriteConfig.databaseId,
