@@ -10,19 +10,19 @@ type UserCardProps = {
 
 const UserCard = ({ candidate }: UserCardProps) => {
   const [voted, setVoted] = useState(false);
-  const [votes, setVotes] = useState<string[]>(() => {
-    // Initialize votes with an empty array if candidate exists, otherwise use an empty array
-    return candidate?.votes || [];
-  });
+  const [votes, setVotes] = useState<string[]>([]); // Initialize with an empty array
   const { mutate: vote } = useVote();
 
   useEffect(() => {
+    if (candidate) {
+      setVotes(candidate.votes || []); // Update votes when candidate changes
+    }
     // Retrieve votes from local storage when component mounts
     const voteState = localStorage.getItem("voted");
     if (voteState !== null) {
       setVoted(true);
     }
-  }, []);
+  }, [candidate]);
 
   const handleVote = async () => {
     if (!voted && candidate) {
