@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useGetCandidates } from "@/lib/react-query/queries";
 import { CandidateCard, Loader } from "@/components/shared";
 

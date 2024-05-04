@@ -3,8 +3,6 @@ import { Models } from "appwrite";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Pencil } from "lucide-react";
-
 
 import {
   Form,
@@ -35,7 +33,6 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
   const [voteModal, setVoteModal] = useState(false);
   const [voted, setVoted] = useState(false);
   const [votes, setVotes] = useState<string[]>(voteList);
-  const [errorMessage, setErrorMessage] = useState('');
   
   const { mutate: vote } = useVote();
 
@@ -154,7 +151,7 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
                     </div>
                   </form>
                 </Form>
-                  {errorMessage}
+                  
                 </div>
               </div>
             </div>

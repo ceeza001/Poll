@@ -1,5 +1,5 @@
 import { useGetCandidates } from "@/lib/react-query/queries";
-import { CandidateCard, Loader } from "@/components/shared";
+import { Loader } from "@/components/shared";
 import { Button } from "@/components/ui/button";
 
 const Admin = () => {
@@ -35,7 +35,7 @@ const Admin = () => {
           </Button>
         </div>
 
-        {candidates.documents.map((candidate) => (
+        {candidates?.documents.map((candidate) => (
           <div className="my-4 rounded-lg shadow-md p-2 border w-full flex justify-between">
             <h2>{candidate.name}</h2>
 
