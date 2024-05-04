@@ -20,7 +20,7 @@ const Home = () => {
           </div>
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-6">
-            {candidates.documents.map((candidate, index) => (
+            {candidates?.documents.map((candidate, index) => (
               <CandidateCard 
                 candidate={candidate} key={index}
               />
