@@ -10,7 +10,7 @@
   }
 
   body {
-    @apply bg-dark-1 text-white min-h-screen font-inter;
+    @apply bg-dark-1 min-h-screen font-inter;
   }
 }
 
@@ -141,7 +141,7 @@
 
   /* Home */
   .home-container {
-    @apply flex flex-col flex-1 items-center gap-10 overflow-scroll py-10 px-5 md:px-8 lg:p-14 custom-scrollbar;
+    @apply flex flex-col flex-1 items-center gap-10 overflow-scroll p-4 custom-scrollbar;
   }
 
   .home-posts {
@@ -243,7 +243,7 @@
 
   /* Left sidebar */
   .leftsidebar {
-    @apply hidden md:flex px-6 py-10 flex-col justify-between min-w-[270px] bg-dark-2;
+    @apply hidden md:flex px-6 py-10 flex-col justify-between min-w-[200px] h-[full] bg-dark-2;
   }
 
   .leftsidebar-link {
@@ -261,12 +261,12 @@
 
   /* Topbar */
   .topbar {
-    @apply sticky top-0 z-50 md:hidden bg-dark-2 w-full;
+    @apply sticky top-0 z-50 bg-dark-1 shadow-md w-full;
   }
 
   /* User card */
   .user-card {
-    @apply w-full bg-dark-2 flex-center flex-col gap-4 border border-dark-4 rounded-[20px] p-[1rem];
+    @apply w-full shadow-md border flex flex-col justify-between rounded-lg p-2;
   }
 }
 

@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 
 import {
   Home,
-  Vote,
+  Admin,
   Result
 } from "@/_root/pages";
 
@@ -20,7 +20,7 @@ const App = () => {
         {/* private routes */}
         <Route element={< RootLayout />}>
           <Route index element={<Home />} />
-          <Route path="/vote/:id" element={<Vote />} />
+          <Route path="/Admin/" element={<Admin />} />
           <Route path="/result" element={<Result />} />
         </Route>
       </Routes>

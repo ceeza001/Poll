@@ -2,14 +2,14 @@ import { Link } from "react-router-dom";
 
 import { useUserContext } from "@/context/AuthContext";
 
-const Topbar = () => {
+const LeftSidebar = () => {
   const { user } = useUserContext();
   
   return (
-    <section className="topbar">
+    <section className="leftsidebar">
       <div className="flex-between py-4 px-5">
-        <Link to="/" className="flex gap-3 items-center h3-bold text-[#275817]">
-          FG Poll
+        <Link to="/" className="flex gap-3 items-center h3-bold">
+          Miss sonum 2023A
         </Link>
 
         <div className="flex gap-4">
@@ -20,4 +20,4 @@ const Topbar = () => {
   );
 };
 
-export default Topbar;
+export default LeftSidebar;
