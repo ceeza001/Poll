@@ -18,12 +18,6 @@ const FileUploader = ({ fieldChange, mediaUrl, type }: FileUploaderProps) => {
     "image/*": [".png", ".jpeg", ".jpg"],
   };
 
-  if (type === "all-file") {
-    acceptTypes["video/*"] = [".mp4", ".mov"]; // Add video types
-    acceptTypes["application/pdf"] = [".pdf"]; // Add PDF type
-    acceptTypes["application/msword"] = [".doc", ".docx"]; // Add document types
-  }
-
   const onDrop = useCallback(
     (acceptedFiles: FileWithPath[]) => {
       setFile(acceptedFiles);
