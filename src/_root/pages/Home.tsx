@@ -1,7 +1,3 @@
-import { useState, useEffect } from "react"
-
-import { Hero, Recommend } from "@/components/shared"
-
 const Home = () => {
   
   return (

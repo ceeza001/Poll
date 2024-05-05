@@ -1,19 +1,20 @@
-import { Models } from "appwrite";
-import { useState, useEffect } from "react"
-import { useParams, useNavigate } from "react-router-dom"
-import { CircleDollarSign, File, LayoutDashboard, ListChecks } from "lucide-react";
+import { useParams } from "react-router-dom"
 
-import { useUserContext } from "@/context/AuthContext";
 import { useGetPollById } from "@/lib/react-query/queries"
-import { CandidateCard, Loader, Banner, Actions } from "@/components/shared"
-import { TitleForm, DescriptionForm, ImageForm, CategoryForm, ChaptersForm, AttachmentForm } from "@/components/forms"
-import { IconBadge } from "@/components/icon-badge";
+import { CandidateCard, Loader } from "@/components/shared"
 
 const Course = () => {
   const { id } = useParams();
   const { data: poll } = useGetPollById(id || "");
   
-  if (!poll) return null;
+  if (!poll) {
+    return (
+      <div className="flex-center flex-col h-full w-full">
+        <Loader />
+      </div>
+    );
+  }
+  
   return (
     <div className="flex flex-1">
       <div className="home-container">

@@ -37,7 +37,7 @@ const Create = () => {
   const { isSubmitting, isValid } = form.formState;
 
   // Query
-  const { mutateAsync: createPoll, isPending: isLoadingCreate } =
+  const { mutateAsync: createPoll } =
     useCreatePoll();
 
   // Handler

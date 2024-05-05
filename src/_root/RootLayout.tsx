@@ -1,11 +1,8 @@
-import { useState, useEffect } from "react"
-import { Outlet, Navigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
-import { useUserContext } from "@/context/AuthContext";
 import { Topbar, LeftSidebar } from "@/components/shared"
 
 const RootLayout = () => {
-  const { isAuthenticated, isOnboarded } = useUserContext();
   
   return (
     <>
