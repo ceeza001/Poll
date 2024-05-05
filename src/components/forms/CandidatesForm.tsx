@@ -38,7 +38,11 @@ export const CandidatesForm = ({
 }: CandidatesFormProps) => {
   const [isCreating, setIsCreating] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
-  
+  const [candidates, setCandidates] = useState([]);
+
+  useEffect(() => {
+    setCandidates(initialData.candidates);
+  }, []);
   const toggleCreating = () => {
     setIsCreating((current) => !current);
   };
@@ -161,12 +165,12 @@ export const CandidatesForm = ({
       {!isCreating && (
         <div className={cn(
           "text-sm mt-2",
-          !initialData.candidates.length && "text-slate-500 italic"
+          !candidates.length && "text-slate-500 italic"
         )}>
-          {!initialData.candidates.length && "No candidates"}
+          {!candidates.length && "No candidates"}
           {/* Render CandidatesList passing candidates */}
           <CandidatesList
-            items={initialData.candidates || []}
+            items={candidates || []}
           />
         </div>
       )}
