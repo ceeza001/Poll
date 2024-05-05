@@ -21,18 +21,17 @@ export const Delete = ({
 
   const { mutate: deleteCandidate } = useDeleteCandidate();
 
-  const onDelete = async (id: string, fileId: string) => {
+  const onDelete = async (fileId: string) => {
     try {
       setIsLoading(true);
 
       deleteCandidate({ candidateId: candidate.$id, fileId: fileId });
       
       toast({ title: "Course deleted" });
-      if (deleteCandidate) {
-        navigate(0);
-      }
+      navigate(0);
+      
     } catch {
-      toast("Something went wrong");
+      toast({title: "Something went wrong"});
     } finally {
       setIsLoading(false);
       
