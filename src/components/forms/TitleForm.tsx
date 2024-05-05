@@ -19,8 +19,8 @@ import { useUpdatePoll } from "@/lib/react-query/queries";
 interface TitleFormProps {
   initialData: {
     title: string;
-    description?: string; // Add description property
-    isPublished?: boolean; // Add isPublished property
+    description: string; // Add description property
+    isPublished: boolean; // Add isPublished property
   };
   pollId: string;
   type: string;
