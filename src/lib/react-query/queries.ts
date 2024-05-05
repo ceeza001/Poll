@@ -2,7 +2,6 @@ import {
   useQuery,
   useMutation,
   useQueryClient,
-  useInfiniteQuery,
 } from "@tanstack/react-query";
 
 import { QUERY_KEYS } from "@/lib/react-query/queryKeys";
@@ -11,20 +10,16 @@ import {
   signInAccount,
   getCurrentUser,
   signOutAccount,
-  getUsers,
-  getUserById,
-  updateUser,
   createPoll,
   deletePoll,
   getPollById,
   updatePoll,
   createCandidate,
   deleteCandidate,
-  getChapterById,
   getPolls,
   vote
 } from "@/lib/appwrite/api";
-import { INewPoll, INewCandidate, IUpdateChapter, INewUser, IUpdatePoll, IUpdateUser } from "@/types";
+import { INewPoll, INewCandidate, INewUser, IUpdatePoll } from "@/types";
 
 // ============================================================
 // AUTH QUERIES
@@ -57,36 +52,6 @@ export const useGetCurrentUser = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_CURRENT_USER],
     queryFn: getCurrentUser,
-  });
-};
-
-export const useGetUsers = () => {
-  return useQuery({
-    queryKey: [QUERY_KEYS.GET_USERS],
-    queryFn: () => getUsers(),
-  });
-};
-
-export const useGetUserById = (userId: string) => {
-  return useQuery({
-    queryKey: [QUERY_KEYS.GET_USER_BY_ID, userId],
-    queryFn: () => getUserById(userId),
-    enabled: !!userId,
-  });
-};
-
-export const useUpdateUser = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: (user: IUpdateUser) => updateUser(user),
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_CURRENT_USER],
-      });
-      queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_USER_BY_ID, data?.$id],
-      });
-    },
   });
 };
 
@@ -124,14 +89,6 @@ export const useGetPollById = (pollId: string) => {
     queryKey: [QUERY_KEYS.GET_POLL_BY_ID, pollId],
     queryFn: () => getPollById(pollId),
     enabled: !!pollId,
-  });
-};
-
-export const useGetChapterById = (chapterId: string) => {
-  return useQuery({
-    queryKey: [QUERY_KEYS.GET_CHAPTER_BY_ID, chapterId],
-    queryFn: () => getChapterById(chapterId),
-    enabled: !!chapterId,
   });
 };
 

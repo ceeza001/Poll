@@ -1,7 +1,7 @@
-import { ID, Query } from "appwrite";
+import { ID } from "appwrite";
 
 import { appwriteConfig, account, databases, storage, avatars } from "./config";
-import { INewPoll, INewCandidate, IUpdateChapter, INewUser, IUpdateUser, IUpdatePoll } from "@/types";
+import { INewPoll, INewCandidate, INewUser, IUpdatePoll } from "@/types";
 
 // ============================================================
 // AUTH
@@ -113,168 +113,7 @@ export async function signOutAccount() {
 }
 
 // ============================================================
-// USER
-// ============================================================
-
-// ============================== UPDATE USER
-export async function onboardUser(user: IOnboardUser) {
-  const hasFileToUpdate = user.file.length > 0;
-  try {
-    let image = {
-      imageUrl: user.imageUrl,
-      imageId: user.imageId,
-    };
-
-    if (hasFileToUpdate) {
-      // Upload new file to appwrite storage
-      const uploadedFile = await uploadFile(user.file[0]);
-      if (!uploadedFile) throw Error;
-
-      // Get new file url
-      const fileUrl = getFilePreview(uploadedFile.$id);
-      if (!fileUrl) {
-        await deleteFile(uploadedFile.$id);
-        throw Error;
-      }
-
-      image = { ...image, imageUrl: fileUrl, imageId: uploadedFile.$id };
-    }
-
-    //  Onboard user
-    const onboardedUser = await databases.updateDocument(
-      appwriteConfig.databaseId,
-      appwriteConfig.userCollectionId,
-      user.userId,
-      {
-        name: user.name,
-        matricNo: user.matricNo,
-        level: user.level,
-        department: user.department,
-        type: user.type,
-        username: user.username,
-        bio: user.bio,
-        onboarded: true,
-        imageUrl: image.imageUrl,
-        imageId: image.imageId,
-      }
-    );
-
-    // Failed to update
-    if (!onboardedUser) {
-      // Delete new file that has been recently uploaded
-      if (hasFileToUpdate) {
-        await deleteFile(image.imageId);
-      }
-      // If no new file uploaded, just throw error
-      throw Error;
-    }
-
-    // Safely delete old file after successful update
-    if (user.imageId && hasFileToUpdate) {
-      await deleteFile(user.imageId);
-    }
-
-    return onboardedUser;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-// ============================== GET USERS
-export async function getUsers() {
-  try {
-    const users = await databases.listDocuments(
-      appwriteConfig.databaseId,
-      appwriteConfig.userCollectionId,
-    );
-
-    if (!users) throw Error;
-
-    return users;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-
-// ============================== GET USER BY ID
-export async function getUserById(userId: string) {
-  try {
-    const user = await databases.getDocument(
-      appwriteConfig.databaseId,
-      appwriteConfig.userCollectionId,
-      userId
-    );
-
-    if (!user) throw Error;
-
-    return user;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-// ============================== UPDATE USER
-export async function updateUser(user: IUpdateUser) {
-  const hasFileToUpdate = user.file.length > 0;
-  try {
-    let image = {
-      imageUrl: user.imageUrl,
-      imageId: user.imageId,
-    };
-
-    if (hasFileToUpdate) {
-      // Upload new file to appwrite storage
-      const uploadedFile = await uploadFile(user.file[0]);
-      if (!uploadedFile) throw Error;
-
-      // Get new file url
-      const fileUrl = getFilePreview(uploadedFile.$id);
-      if (!fileUrl) {
-        await deleteFile(uploadedFile.$id);
-        throw Error;
-      }
-
-      image = { ...image, imageUrl: fileUrl, imageId: uploadedFile.$id };
-    }
-
-    //  Update user
-    const updatedUser = await databases.updateDocument(
-      appwriteConfig.databaseId,
-      appwriteConfig.poetCollectionId,
-      user.userId,
-      {
-        penname: user.penname,
-        bio: user.bio,
-        onboarded: user.onboarded,
-        imageUrl: image.imageUrl,
-        imageId: image.imageId,
-      }
-    );
-
-    // Failed to update
-    if (!updatedUser) {
-      // Delete new file that has been recently uploaded
-      if (hasFileToUpdate) {
-        await deleteFile(image.imageId);
-      }
-      // If no new file uploaded, just throw error
-      throw Error;
-    }
-
-    // Safely delete old file after successful update
-    if (user.imageId && hasFileToUpdate) {
-      await deleteFile(user.imageId);
-    }
-
-    return updatedUser;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-// ============================================================
-// COURSES
+// POLLS
 // ============================================================
 
 // ============================== UPLOAD FILE
@@ -517,23 +356,6 @@ export async function deleteCandidate(candidateId?: string, fileId?: string) {
     }
 
     return { status: "Ok" };
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-// ============================== GET CHAPTER BY ID
-export async function getChapterById(chapterId: string) {
-  try {
-    const chapter = await databases.getDocument(
-      appwriteConfig.databaseId,
-      appwriteConfig.chapterCollectionId,
-      chapterId
-    );
-
-    if (!chapter) throw Error;
-
-    return chapter;
   } catch (error) {
     console.log(error);
   }
