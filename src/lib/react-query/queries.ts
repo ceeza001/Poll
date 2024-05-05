@@ -74,7 +74,7 @@ export const useCreatePoll = () => {
 export const useDeletePoll = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ pollId, fileId }: { pollId?: string; fileId: string }) =>
+    mutationFn: ({ pollId, fileId }: { pollId: string; fileId: string }) =>
       deletePoll(pollId, fileId),
     onSuccess: () => {
       queryClient.invalidateQueries({

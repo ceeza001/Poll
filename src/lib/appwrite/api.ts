@@ -141,7 +141,7 @@ export function getFilePreview(fileId: string) {
       fileId,
       2000,
       2000,
-      "top",
+      100,
       100
     );
 
@@ -190,8 +190,8 @@ export async function createPoll(poll: INewPoll) {
   }
 }
 
-// ============================== DELETE COURSE
-export async function deletePoll(pollId?: string, fileId?: string) {
+// ============================== DELETE POLL
+export async function deletePoll(pollId: string, fileId: string) {
   if (!deletePoll) return;
 
   try {
