@@ -29,7 +29,7 @@ export type IUser = {
   name: string;
   email: string;
   imageUrl: string;
-  bio: string;
+  votersNo: string;
 };
 
 export type INewUser = {

@@ -1,11 +1,7 @@
-export { default as ProfileUploader } from "./ProfileUploader";
 export { default as Loader } from "./Loader";
 export { default as CandidateCard } from "./CandidateCard";
 export { default as Topbar } from "./Topbar";
-export { default as Hero } from "./Hero";
-export { default as Recommend } from "./Recommend";
 export { default as LeftSidebar } from "./LeftSidebar";
-export { default as ManageCourses } from "./manage-courses";
 export { default as Banner } from "./Banner";
 export { default as FileUploader } from "./FileUploader";
 export { Actions } from "./Actions";

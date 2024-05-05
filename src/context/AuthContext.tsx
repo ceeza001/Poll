@@ -7,24 +7,17 @@ import { getCurrentUser } from "@/lib/appwrite/api";
 export const INITIAL_USER = {
   id: "",
   name: "",
-  username: "",
   email: "",
-  matricNo: "",
-  type: "",
-  level: "",
+  votersNo: "",
   imageUrl: "",
-  bio: "",
-  onboarded: false,
 };
 
 const INITIAL_STATE = {
   user: INITIAL_USER,
   isLoading: false,
   isAuthenticated: false,
-  isOnboarded: false,
   setUser: () => {},
   setIsAuthenticated: () => {},
-  setIsOnboarded: () => {},
   checkAuthUser: async () => false as boolean,
 };
 
@@ -34,8 +27,6 @@ type IContextType = {
   setUser: React.Dispatch<React.SetStateAction<IUser>>;
   isAuthenticated: boolean;
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
-  isOnboarded: boolean;
-  setIsOnboarded: React.Dispatch<React.SetStateAction<boolean>>;
   checkAuthUser: () => Promise<boolean>;
 };
 
@@ -45,7 +36,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
   const [user, setUser] = useState<IUser>(INITIAL_USER);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isOnboarded, setIsOnboarded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const checkAuthUser = async () => {
@@ -57,17 +47,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           id: currentAccount.$id,
           name: currentAccount.name,
           email: currentAccount.email,
-          matricNo: currentAccount.matricNo,
-          type: currentAccount.type,
-          level: currentAccount.level,
-          username: currentAccount.username,
-          department: currentAccount.department,
+          votersNo: currentAccount.votersNo,
           imageUrl: currentAccount.imageUrl,
-          bio: currentAccount.bio,
         });
         setIsAuthenticated(true);
-        setIsOnboarded(currentAccount.onboarded);
-
+        
         return true;
       }
 
@@ -99,7 +83,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     isLoading,
     isAuthenticated,
     setIsAuthenticated,
-    isOnboarded,
     checkAuthUser,
   };
 

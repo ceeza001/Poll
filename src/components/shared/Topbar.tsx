@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { navLinks } from "@/constants";
 import { Button } from "../ui/button";
@@ -18,7 +18,7 @@ import {
 
 const Topbar = () => {
   const navigate = useNavigate();
-  const { user, isLoading } = useUserContext();
+  const { user, setIsAuthenticated, setUser, INITIAL_USER } = useUserContext();
   const { mutate: signOut, isSuccess } = useSignOutAccount();
 
   const handleSignOut = async (
