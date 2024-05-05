@@ -50,11 +50,11 @@ export const Actions = ({
     }
   }
   
-  const onDelete = async (fileId: string) => {
+  const onDelete = async () => {
     try {
       setIsLoading(true);
       
-      deletePoll({ pollId: poll.$id, fileId: fileId });
+      deletePoll({ pollId: poll.$id, fileId: poll.imageId });
       console.log("deleting...");
       
       toast({ title: "Course deleted" });
@@ -76,7 +76,7 @@ export const Actions = ({
       >
         {isPublished ? "Unpublish" : "Publish"}
       </Button>
-      <ConfirmModal onConfirm={() => onDelete(poll.$id)}>
+      <ConfirmModal onConfirm={onDelete}>
         <Button size="sm" disabled={isLoading} className="bg-red-500/80 border border-red-30">
           <Trash className="h-4 w-4" />
         </Button>
