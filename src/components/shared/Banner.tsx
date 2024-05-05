@@ -24,22 +24,14 @@ interface BannerProps extends VariantProps<typeof bannerVariants> {
   label: string;
 }
 
-// Map variant names to icon components
-const iconMap: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
-  warning: AlertTriangle,
-  success: CheckCircleIcon,
-};
-
 // Banner component
 const Banner: React.FC<BannerProps> = ({
   label,
   variant,
 }: BannerProps) => {
-  const Icon = iconMap[variant || "warning"];
-
+  
   return (
     <div className={cn(bannerVariants({ variant }))}>
-      <Icon className="h-6 w-6 mr-2" />
       {label}
     </div>
   );

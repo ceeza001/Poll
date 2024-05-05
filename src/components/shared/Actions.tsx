@@ -76,7 +76,7 @@ export const Actions = ({
       >
         {isPublished ? "Unpublish" : "Publish"}
       </Button>
-      <ConfirmModal onConfirm={onDelete}>
+      <ConfirmModal onConfirm={() => onDelete(poll.$id)}>
         <Button size="sm" disabled={isLoading} className="bg-red-500/80 border border-red-30">
           <Trash className="h-4 w-4" />
         </Button>
