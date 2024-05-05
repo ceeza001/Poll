@@ -24,7 +24,7 @@ export const Actions = ({
   const [isLoading, setIsLoading] = useState(false);
 
     // Queries
-  const { mutateAsync: updatePoll, isPending: isLoadingUpdate } =
+  const { mutateAsync: updatePoll } =
     useUpdatePoll();
   const { mutate: deletePoll } = useDeletePoll();
   
@@ -33,22 +33,24 @@ export const Actions = ({
       setIsLoading(true);
       const updatedPoll = await updatePoll({
         pollId: poll.$id,
+        title: poll.title, // Assuming initialData has title property
+        description: poll.description,
         isPublished: !isPublished,
       });
 
       if (!updatedPoll) {
-        console.error("Failed. Please try again.", error);
+        console.error("Failed. Please try again.", Error);
 
         return;
       }
     } catch {
-      toast("Something went wrong");
+      toast({ title:"Something went wrong"});
     } finally {
       setIsLoading(false);
     }
   }
   
-  const onDelete = async (id: string, fileId: string) => {
+  const onDelete = async (fileId: string) => {
     try {
       setIsLoading(true);
       
@@ -58,7 +60,7 @@ export const Actions = ({
       toast({ title: "Course deleted" });
       navigate(`/dashboard/${poll.creator.$id}`);
     } catch {
-      toast("Something went wrong");
+      toast({ title: "Something went wrong" });
     } finally {
       setIsLoading(false);
     }

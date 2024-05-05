@@ -48,7 +48,7 @@ const TitleForm = ({
   const { isSubmitting, isValid } = form.formState;
 
   // Queries
-  const { mutateAsync: updatePoll, isPending: isLoadingUpdatePoll } =
+  const { mutateAsync: updatePoll } =
     useUpdatePoll();
   
   // Handler
@@ -57,7 +57,9 @@ const TitleForm = ({
       if (type === "Poll") {
         const updatedPoll = await updatePoll({
           pollId: pollId,
-          title: value.title,
+          title: value.title, // Assuming initialData has title property
+          description: initialData.description,
+          isPublished: initialData.isPublished, // Assuming initialData has isPublished property
         });
 
         if (!updatedPoll) {

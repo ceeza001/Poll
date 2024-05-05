@@ -1,8 +1,6 @@
 import { Models } from "appwrite"
 import { useEffect, useState } from "react";
 
-import { useDeleteCandidate } from "@/lib/react-query/queries";
-import { cn } from "@/lib/utils";
 import { Delete } from "@/components/shared";
 
 interface CandidatesListProps {

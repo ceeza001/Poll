@@ -49,7 +49,7 @@ const DescriptionForm = ({
   const { isSubmitting, isValid } = form.formState;
 
   // Queries
-  const { mutateAsync: updatePoll, isPending: isLoadingUpdate } =
+  const { mutateAsync: updatePoll } =
     useUpdatePoll();
 
   // Handler
@@ -57,9 +57,11 @@ const DescriptionForm = ({
     try {
       const updatedPoll = await updatePoll({
         pollId: pollId,
+        title: initialData.title, // Assuming initialData has title property
         description: value.description,
+        isPublished: initialData.isPublished, // Assuming initialData has isPublished property
       });
-
+      
       if (!updatedPoll) {
         toast({ title: "Failed. Please try again." });
 
