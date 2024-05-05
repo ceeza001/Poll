@@ -1,17 +1,15 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { useUserContext } from "@/context/AuthContext";
 import { useGetPolls } from "@/lib/react-query/queries";
 import { Button } from "@/components/ui"
 
 const Polls = () => {
-  const navigate = useNavigate();
-  const { user } = useUserContext();
   const { data: polls } = useGetPolls();
   
   if (!polls) return null;
 
-  const handleCopyInvitation = (invitationLink) => {
+  const handleCopyInvitation = (invitationLink: string) => {
     // Copy invitation link to clipboard
     navigator.clipboard.writeText(invitationLink)
       .then(() => {

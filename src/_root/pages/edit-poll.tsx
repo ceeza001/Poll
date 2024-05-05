@@ -1,16 +1,12 @@
 import { Models } from "appwrite";
-import { useState, useEffect } from "react"
-import { useParams, useNavigate } from "react-router-dom"
-import { CircleDollarSign, File, LayoutDashboard, ListChecks } from "lucide-react";
+import { useParams } from "react-router-dom"
 
 import { useGetPollById } from "@/lib/react-query/queries"
 import { Loader, Banner, Actions } from "@/components/shared"
 import { TitleForm, DescriptionForm, CandidatesForm } from "@/components/forms"
-import { IconBadge } from "@/components/icon-badge";
 
 const EditPoll = () => {
   const { id } = useParams()
-  const navigate = useNavigate()
   
   const { data: poll } = useGetPollById(id || "");
   

@@ -1,3 +1,4 @@
+import { Models } from "appwrite";
 import { useParams } from "react-router-dom"
 
 import { useGetPollById } from "@/lib/react-query/queries"
@@ -29,7 +30,7 @@ const Course = () => {
         </div>
 
         <div className="mt-4 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-6">
-          {poll.candidates?.map((candidate, index) => (
+          {poll.candidates?.map((candidate: Models.document, index: string) => (
             <CandidateCard 
               candidate={candidate} key={index}
             />

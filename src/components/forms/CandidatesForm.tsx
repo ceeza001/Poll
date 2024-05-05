@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { Loader2, PlusCircle } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
-import { useNavigate } from "react-router-dom";
 import { Models } from "appwrite";
 
 import {
@@ -50,8 +49,7 @@ export const CandidatesForm = ({
   }
 
   const { toast } = useToast();
-  const navigate = useNavigate();
-
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -63,12 +61,13 @@ export const CandidatesForm = ({
   const { isSubmitting, isValid } = form.formState;
 
   // Query
-  const { mutateAsync: createCandidate, isPending: isLoadingCreate } =
+  const { mutateAsync: createCandidate } =
     useCreateCandidate();
 
   // Handler
   const onSubmit = async (value: z.infer<typeof formSchema>) => {
     try {
+      setIsUpdating(true);
       const newCandidate = await createCandidate({
         ...value,
         pollId: pollId,
@@ -85,6 +84,7 @@ export const CandidatesForm = ({
       // Update chapters array with the new chapter
       setCandidates((prevCandidates) => [...prevCandidates, newCandidate]);
 
+      setIsUpdatin(false);
       toggleCreating();
     } catch (error) {
       console.error("Error:", error);

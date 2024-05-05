@@ -128,7 +128,7 @@ const SignIn = () => {
           </div>
 
           <Button type="submit" className="shad-button_primary body-bold">
-            {isLoading || isUserLoading ? (
+            {isPending || isUserLoading ? (
               <div className="flex-center gap-2 invert-white">
                 <Loader /> Loading...
               </div>

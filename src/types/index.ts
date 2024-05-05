@@ -42,7 +42,7 @@ export type IUpdatePoll = {
 };
 
 export type INewCandidate = {
-  courseId: string;
+  pollId: string;
   name: string;
   file: File[];
 }
