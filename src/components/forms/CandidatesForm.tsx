@@ -38,7 +38,7 @@ export const CandidatesForm = ({
 }: CandidatesFormProps) => {
   const [isCreating, setIsCreating] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
-  const [candidates, setCandidates] = useState([]);
+  const [candidates, setCandidates] = useState<Models.Document[]>([]);
 
   useEffect(() => {
     setCandidates(initialData.candidates);
