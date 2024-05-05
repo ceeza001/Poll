@@ -58,8 +58,6 @@ const TitleForm = ({
         const updatedPoll = await updatePoll({
           pollId: pollId,
           title: value.title, // Assuming initialData has title property
-          description: initialData.description,
-          isPublished: initialData.isPublished, // Assuming initialData has isPublished property
         });
 
         if (!updatedPoll) {
