@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 import { useGetCandidates } from "@/lib/react-query/queries";
 import { CandidateCard, Loader } from "@/components/shared";
 
@@ -27,6 +29,10 @@ const Home = () => {
             ))}
           </div>
         )}
+        <Link to="/result"
+          className="text-white font-semibold p-2 rounded-lg mx-auto bg-primary-500">
+          Results
+        </Link>
       </div>
     </div>
   );

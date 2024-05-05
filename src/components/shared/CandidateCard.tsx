@@ -43,14 +43,6 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
 
 
   const { isSubmitting, isValid } = form.formState;
-
-  useEffect(() => {
-    // Retrieve votes from local storage when component mounts
-    const voteState = localStorage.getItem("voted");
-    if (voteState !== null) {
-      setVoted(true);
-    }
-  }, [candidate]);
   
   const handleVote = async (value: z.infer<typeof formSchema>) => {
   if (!voted && candidate) {
@@ -63,8 +55,7 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
       vote({ votes: votesArray, candidateId: candidate.$id });
       // Set voted status to true
       setVoted(true);
-      // Set voted status to true in local storage
-      localStorage.setItem('voted', candidate.$id);
+      
       window.location.reload();
     }
   }
