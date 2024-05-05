@@ -42,9 +42,7 @@ const TitleForm = ({
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      title: initialData?.description || ""
-    },
+    defaultValues: initialData,
   });
 
   const { isSubmitting, isValid } = form.formState;
@@ -59,7 +57,7 @@ const TitleForm = ({
       if (type === "Poll") {
         const updatedPoll = await updatePoll({
           pollId: pollId,
-          title: valie.title, // Assuming initialData has title property
+          title: value.title, // Assuming initialData has title property
           description: initialData.description,
           isPublished: initialData.isPublished, // Assuming initialData has isPublished property
         });
