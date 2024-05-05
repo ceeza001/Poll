@@ -1,78 +1,59 @@
-export const sidebarLinks = [
+export const navLinks = [
   {
     imgURL: "/assets/icons/home.svg",
     route: "/",
     label: "Home",
   },
   {
-    imgURL: "/assets/icons/wallpaper.svg",
-    route: "/explore",
-    label: "Explore",
+    imgURL: "/assets/icons/upcoming.svg",
+    route: "/polls",
+    label: "Polls",
   },
   {
-    imgURL: "/assets/icons/people.svg",
-    route: "/all-users",
-    label: "People",
+    imgURL: "/assets/icons/previous.svg",
+    route: "/previous",
+    label: "Previous",
   },
   {
-    imgURL: "/assets/icons/bookmark.svg",
-    route: "/saved",
-    label: "Saved",
+    imgURL: "/assets/icons/results.svg",
+    route: "/results",
+    label: "Result",
   },
   {
-    imgURL: "/assets/icons/gallery-add.svg",
-    route: "/create-post",
-    label: "Create Post",
-  },
-];
-
-export const bottombarLinks = [
-  {
-    imgURL: "/assets/icons/home.svg",
-    route: "/",
-    label: "Home",
-  },
-  {
-    imgURL: "/assets/icons/wallpaper.svg",
-    route: "/explore",
-    label: "Explore",
-  },
-  {
-    imgURL: "/assets/icons/bookmark.svg",
-    route: "/saved",
-    label: "Saved",
-  },
-  {
-    imgURL: "/assets/icons/gallery-add.svg",
-    route: "/create-post",
+    imgURL: "/assets/icons/create.svg",
+    route: "/create",
     label: "Create",
   },
 ];
 
-export const navbarLinks = [
+export const leftSidebarLinks = [
   {
-    imgURL: "/assets/icons/ai.svg",
-    route: "/kubi",
-    label: "Live spaces",
+    imgURL: "/assets/icons/home.svg",
+    route: "/",
+    label: "Home",
   },
   {
-    imgURL: "/assets/icons/community.svg",
-    route: "/communities",
-    label: "Communities",
+    imgURL: "/assets/icons/dashboard.svg",
+    route: "/dashboard",
+    label: "Dashboard",
   },
   {
-    imgURL: "/assets/icons/shop.svg",
-    route: "/marketplace",
-    label: "Marketplace",
+    imgURL: "/assets/icons/bot.svg",
+    route: "/neuro",
+    label: "Neuro",
   },
   {
-    imgURL: "/assets/icons/planet.svg",
-    route: "/oasis",
-    label: "Poetic Oasis",
+    imgURL: "/assets/icons/book.svg",
+    route: "/community",
+    label: "Community",
+  },
+];
+
+export const dashboardTabs= [
+  {
+    label: "Assessment"
   },
   {
-    imgURL: "/assets/icons/ai.svg",
-    route: "/kubi",
-    label: "Kubi",
+    label: "Courses",
   },
 ];

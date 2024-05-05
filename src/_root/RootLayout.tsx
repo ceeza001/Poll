@@ -1,20 +1,23 @@
-import { Outlet } from "react-router-dom";
+import { useState, useEffect } from "react"
+import { Outlet, Navigate } from "react-router-dom";
 
-import Topbar from "@/components/shared/Topbar";
-import LeftSidebar from "@/components/shared/LeftSidebar";
+import { useUserContext } from "@/context/AuthContext";
+import { Topbar, LeftSidebar } from "@/components/shared"
 
 const RootLayout = () => {
+  const { isAuthenticated, isOnboarded } = useUserContext();
   
   return (
-    <div className="w-full">
-      <Topbar />
-      <div className="w-full md:flex h-full">
+    <>
+      <div className="w-full md:flex">
+        <Topbar />
         <LeftSidebar />
-          <section className="flex flex-1 h-full">
-            <Outlet />
-          </section>
-        </div>
-    </div>
+        
+        <section className="w-full mb-[3.4rem]">
+          <Outlet />
+        </section>
+      </div>
+    </>
   );
 };
 

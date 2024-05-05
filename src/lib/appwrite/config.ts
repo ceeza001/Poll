@@ -5,10 +5,14 @@ export const appwriteConfig = {
   projectId: import.meta.env.VITE_APPWRITE_PROJECT_ID,
   databaseId: import.meta.env.VITE_APPWRITE_DATABASE_ID,
   storageId: import.meta.env.VITE_APPWRITE_STORAGE_ID,
-  voterCollectionId: import.meta.env.VITE_APPWRITE_POET_COLLECTION_ID,
-  postCollectionId: import.meta.env.VITE_APPWRITE_POST_COLLECTION_ID,
-  candidatesCollectionId: import.meta.env.VITE_APPWRITE_CANDIDATES_COLLECTION_ID,
+  userCollectionId: import.meta.env.VITE_APPWRITE_USER_COLLECTION_ID,
+  pollCollectionId: import.meta.env.VITE_APPWRITE_POLL_COLLECTION_ID,
+  courseCollectionId: import.meta.env.VITE_APPWRITE_COURSE_COLLECTION_ID,
+  candidatesCollectionId: import.meta.env.VITE_APPWRITE_CANDIDATE_COLLECTION_ID,
+  categoryCollectionId: import.meta.env.VITE_APPWRITE_CATEGORY_COLLECTION_ID,
+  attachmentCollectionId: import.meta.env.VITE_APPWRITE_ATTACHMENT_COLLECTION_ID,
   communityCollectionId: import.meta.env.VITE_APPWRITE_COMMUNITY_COLLECTION_ID,
+  
 };
 
 export const client = new Client();

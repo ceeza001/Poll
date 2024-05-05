@@ -6,21 +6,24 @@ export enum QUERY_KEYS {
   GET_CURRENT_USER = "getCurrentUser",
   GET_USERS = "getUsers",
   GET_USER_BY_ID = "getUserById",
-  GET_VOTERS = "getVoters",
+
+  // COURSE KEYS
+  GET_POLLS = "getPolls",
+  GET_INFINITE_COURSES = "getInfiniteCourses",
+  GET_RECENT_POLLS = "getRecentPolls",
+  GET_POLL_BY_ID = "getPollById",
+  GET_CHAPTER_BY_ID = "getChapterById",
+  GET_USER_POLLS = "getUserPolls",
+  GET_FILE_PREVIEW = "getFilePreview",
+  GET_CATEGORIES = "getCategories",
+  GET_CURRENT_POLL = "getCurrentPoll",
+  GET_CURRENT_CHAPTER = "getCurrentChapter",
   
   // COMMUNITY KEYS
+  GET_RECENT_COMMUNITIES = "getRecentCommunities",
+  GET_COMMUNITIES = "getCommunities",
   GET_COMMUNITY_BY_ID = "getCommunityById",
-  GET_INFINITE_COMMUNITIES = "getInfiniteCommunities",
-  GET_USER_COMMUNITIES = "getUserCommunities",
-
-  // POST KEYS
-  GET_POSTS = "getPosts",
-  GET_INFINITE_POSTS = "getInfinitePosts",
-  GET_RECENT_POSTS = "getRecentPosts",
-  GET_POST_BY_ID = "getPostById",
-  GET_USER_POSTS = "getUserPosts",
-  GET_FILE_PREVIEW = "getFilePreview",
-
+  
   //  SEARCH KEYS
   SEARCH_POSTS = "getSearchPosts",
   SEARCH_COMMUNITIES = "getSearchCommunities",

@@ -63,7 +63,7 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
 
 
   return (
-    <div className="user-card">
+    <div className="bg-card w-full shadow-md border flex flex-col justify-between rounded-lg p-2">
       {candidate && (
         <>
           <div>

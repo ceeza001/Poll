@@ -4,6 +4,21 @@ export type INavLink = {
   label: string;
 };
 
+export type IOnboardUser = {
+  userId: string;
+  name: string;
+  username: string;
+  level: string;
+  department: string;
+  type: string;
+  matricNo: string;
+  bio: string;
+  onboarded: boolean;
+  imageId: string;
+  imageUrl: URL | string;
+  file: File[];
+};
+
 export type IUpdateUser = {
   userId: string;
   name: string;
@@ -14,14 +29,39 @@ export type IUpdateUser = {
   file: File[];
 };
 
-export type INewPost = {
+export type INewPoll = {
   userId: string;
   title: string;
-  caption: string;
+};
+
+export type IUpdatePoll = {
+  courseId: string;
+  title: string;
+  description: string;
+  isPublished: boolean;
+};
+
+export type INewCandidate = {
+  courseId: string;
+  name: string;
   file: File[];
-  type: string,
-  location?: string;
-  tags?: string;
+}
+
+export type IUpdateChapter = {
+  chapterId: string;
+  title: string;
+  description: string;
+  imageId: string;
+  imageUrl: URL | string;
+  category: string;
+  isPublished: boolean;
+  file: File[];
+};
+
+export type INewAttachment = {
+  courseId: string;
+  name: string;
+  file: File[];
 };
 
 export type IUpdatePost = {
@@ -40,15 +80,19 @@ export type IUser = {
   id: string;
   name: string;
   email: string;
-  vote: string;
+  imageUrl: string;
+  bio: string;
 };
 
 export type INewUser = {
   email: string;
+  name: string;
   password: string;
 };
 
 export type INewCommunity = {
+  file: File[];
   name: string;
-  bio: string;
+  description: string;
+  creator: string;
 };
