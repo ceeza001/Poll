@@ -1,4 +1,3 @@
-import { Models } from "appwrite";
 import { useParams } from "react-router-dom"
 
 import { useGetPollById } from "@/lib/react-query/queries"

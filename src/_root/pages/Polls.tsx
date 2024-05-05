@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 
-import { useUserContext } from "@/context/AuthContext";
 import { useGetPolls } from "@/lib/react-query/queries";
 import { Button } from "@/components/ui"
 

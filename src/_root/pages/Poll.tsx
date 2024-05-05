@@ -30,7 +30,7 @@ const Course = () => {
         </div>
 
         <div className="mt-4 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-6">
-          {poll.candidates?.map((candidate: Models.document, index: string) => (
+          {poll.candidates?.map((candidate: Models.Document, index: string) => (
             <CandidateCard 
               candidate={candidate} key={index}
             />

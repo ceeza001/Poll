@@ -2,7 +2,7 @@ import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Loader2, PlusCircle } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { Models } from "appwrite";
 
@@ -23,7 +23,7 @@ import { useCreateCandidate } from "@/lib/react-query/queries";
 import { CandidatesList } from "./candidates-list";
 
 interface CandidatesFormProps {
-  initialData: Models.Document[];
+  initialData: Models.Document;
   pollId: string;
 };
 
@@ -38,18 +38,13 @@ export const CandidatesForm = ({
 }: CandidatesFormProps) => {
   const [isCreating, setIsCreating] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
-  const [candidates, setCandidates] = useState([]);
-
-  useEffect(() => {
-    setCandidates(initialData.candidates);
-  }, []);
   
   const toggleCreating = () => {
     setIsCreating((current) => !current);
-  }
+  };
 
   const { toast } = useToast();
-  
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -60,38 +55,36 @@ export const CandidatesForm = ({
 
   const { isSubmitting, isValid } = form.formState;
 
-  // Query
-  const { mutateAsync: createCandidate } =
-    useCreateCandidate();
+  const { mutateAsync: createCandidate } = useCreateCandidate();
 
-  // Handler
   const onSubmit = async (value: z.infer<typeof formSchema>) => {
     try {
       setIsUpdating(true);
       const newCandidate = await createCandidate({
-        ...value,
         pollId: pollId,
+        name: value.name,
+        file: value.file,
+        imageId: "", // Provide imageId and imageUrl if required by INewCandidate
+        imageUrl: "", // Adjust accordingly based on your requirements
       });
 
       if (!newCandidate) {
         toast({
           title: `Create Course failed. Please try again.`,
         });
-        return; // Exit early if creating chapter fails
+        return;
       }
 
       form.reset();
-      // Update chapters array with the new chapter
       setCandidates((prevCandidates) => [...prevCandidates, newCandidate]);
 
-      setIsUpdatin(false);
+      setIsUpdating(false); // Fix typo here
       toggleCreating();
     } catch (error) {
       console.error("Error:", error);
       toast({ title: "Something went wrong" });
     }
-  }
-  
+  };
 
   return (
     <div className="relative shad-textarea mt-6 p-4">
@@ -145,9 +138,11 @@ export const CandidatesForm = ({
                 <FormItem>
                   <FormLabel>Candidate's image</FormLabel>
                   <FormControl>
+                    {/* Adjust props according to your FileUploader component */}
                     <FileUploader
                       fieldChange={field.onChange}
-                      mediaUrl={initialData?.imageUrl}
+                      mediaUrl={initialData[0]?.imageUrl} // Adjust index if needed
+                      type="image" // Add the type prop here
                     />
                   </FormControl>
                 </FormItem>
@@ -166,16 +161,17 @@ export const CandidatesForm = ({
       {!isCreating && (
         <div className={cn(
           "text-sm mt-2",
-          !initialData.candidates?.length && "text-slate-500 italic"
+          !initialData.candidates.length && "text-slate-500 italic"
         )}>
-          {!initialData.candidates?.length && "No candidates"}
+          {!initialData.candidates.length && "No candidates"}
+          {/* Render CandidatesList passing candidates */}
           <CandidatesList
-            items={candidates || []}
+            items={initialData.candidates || []}
           />
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
 export default CandidatesForm
