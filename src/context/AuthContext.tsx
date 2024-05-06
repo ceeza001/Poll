@@ -10,6 +10,7 @@ export const INITIAL_USER = {
   email: "",
   voterId: "",
   imageUrl: "",
+  isAdmin: false,
 };
 
 const INITIAL_STATE = {
@@ -49,6 +50,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           email: currentAccount.email,
           voterId: currentAccount.voterId,
           imageUrl: currentAccount.imageUrl,
+          isAdmin: currentAccount.isAdmin,
         });
         setIsAuthenticated(true);
         
