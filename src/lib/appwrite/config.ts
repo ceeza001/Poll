@@ -9,10 +9,6 @@ export const appwriteConfig = {
   pollCollectionId: import.meta.env.VITE_APPWRITE_POLL_COLLECTION_ID,
   courseCollectionId: import.meta.env.VITE_APPWRITE_COURSE_COLLECTION_ID,
   candidatesCollectionId: import.meta.env.VITE_APPWRITE_CANDIDATE_COLLECTION_ID,
-  categoryCollectionId: import.meta.env.VITE_APPWRITE_CATEGORY_COLLECTION_ID,
-  attachmentCollectionId: import.meta.env.VITE_APPWRITE_ATTACHMENT_COLLECTION_ID,
-  communityCollectionId: import.meta.env.VITE_APPWRITE_COMMUNITY_COLLECTION_ID,
-  
 };
 
 export const client = new Client();
