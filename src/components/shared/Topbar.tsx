@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { navLinks } from "@/constants";
 
@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/sheet";
 
 const Topbar = () => {
-  const navigate = useNavigate();
   
   return (
     <section className="topbar">

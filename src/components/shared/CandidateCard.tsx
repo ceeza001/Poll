@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Models } from "appwrite";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,6 +21,14 @@ type UserCardProps = {
   candidate: Models.Document | null;
 };
 
+type UserDocument = {
+  $id: string;
+  imageUrl: string;
+  name: string;
+  voterId: string;
+  // Add other properties as needed
+};
+
 const formSchema = z.object({
   id: z.string().min(10, {
     message: "id must be 10 characters long",
@@ -34,10 +42,10 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
   const [voteModal, setVoteModal] = useState(false);
   const [voted, setVoted] = useState(false);
   const [votes, setVotes] = useState<string[]>(voteList);
-  const [matchedUser, setMatchedUser] = useState();
+  const [matchedUser, setMatchedUser] = useState<UserDocument | null>(null);
   
   const { data: users } = useGetUsers();
-  const { mutate: vote } = useVote();
+  const { mutate: voteMutation } = useVote();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -48,29 +56,27 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
 
   useEffect(() => {
     if (isValid && users) {
-      const matchedUser = users.documents.find(user => user.voterId === form.watch('id'));
-      if (matchedUser) {
-        setMatchedUser(matchedUser);
-      }
+      const matchedUser = users.documents.find(user => user.voterId === form.watch('id')) as UserDocument | undefined;
+      setMatchedUser(matchedUser || null);
     }
   }, [isValid, users, form.watch('id')]);
   
   const handleVote = async (value: z.infer<typeof formSchema>) => {
-  if (!voted && candidate) {
-    if (!votes.includes(value.id)) { // Check if value.id is not already in votesArray
-      let votesArray = [...votes];
+    if (!voted && candidate) {
+      if (!votes.includes(value.id)) { // Check if value.id is not already in votesArray
+        let votesArray = [...votes];
 
-      votesArray.push(value.id);
-      setVotes(votesArray);
-      // Perform the vote mutation
-      vote({ votes: votesArray, candidateId: candidate.$id });
-      // Set voted status to true
-      setVoted(true);
-      localStorage.setItem('voted', candidate.$id);
-      window.location.reload();
+        votesArray.push(value.id);
+        setVotes(votesArray);
+        // Perform the vote mutation
+        voteMutation({ votes: votesArray, candidateId: candidate.$id });
+        // Set voted status to true
+        setVoted(true);
+        localStorage.setItem('voted', candidate.$id);
+        window.location.reload();
+      }
     }
-  }
-};
+  };
 
   return (
     <div className="bg-card w-full shadow-md border flex flex-col justify-between rounded-lg p-2">
@@ -154,26 +160,21 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
                 </Form>
                 </div>
               </div>
-              {isValid && users && users.documents.some(user => user.voterId === form.watch('id')) && (
-                <>
-                  {matchedUser && (
-                    <div className="fixed top-4 bg-background p-2 rounded-lg z-[50] flex gap-2">
-                      <div className="flex gap-2 items-center">
-                        <img 
-                          src={matchedUser.imageUrl}
-                          className="w-[2.5rem] h-[2.5rem] rounded-full "
-                          alt="User"
-                        />
-                        <div>
-                          <h2 className="font-bold">{matchedUser.name}</h2>
-                          <p>voter's id: {matchedUser.voterId}</p>
-                        </div>
-                      </div>
+              {isValid && users && users.documents.some(user => user.voterId === form.watch('id')) && matchedUser && (
+                <div className="fixed top-4 bg-background p-2 rounded-lg z-[50] flex gap-2">
+                  <div className="flex gap-2 items-center">
+                    <img 
+                      src={matchedUser.imageUrl}
+                      className="w-[2.5rem] h-[2.5rem] rounded-full "
+                      alt="User"
+                    />
+                    <div>
+                      <h2 className="font-bold">{matchedUser.name}</h2>
+                      <p>voter's id: {matchedUser.voterId}</p>
                     </div>
-                  )}
-                </>
+                  </div>
+                </div>
               )}
-              
             </div>
           )}
         </>
