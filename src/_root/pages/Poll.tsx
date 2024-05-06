@@ -44,10 +44,18 @@ const Course = () => {
   
   return (
     <div className="flex flex-1">
-      <div className="home-container">
+      <div className="p-4">
+
+        <div className="mb-2 rounded-lg p-2 flex justify-between items-center">
+          <h2 className="h2-bold">{poll.title}</h2>
+          <Link to={`/results/${poll.$id}`}>
+            <Button className="shad-button_primary">
+              Results
+            </Button>
+          </Link>
+        </div>
         
-        <h2 className="h2-bold">{poll.title}</h2>
-        <div className="w-full min-h-[15rem] rounded-lg overflow-hidden border border-dark-4">
+        <div className="w-full h-[15rem] rounded-lg overflow-hidden border border-dark-4">
           <img 
             src="/assets/images/hero.jpeg"
             className="w-full h-full"

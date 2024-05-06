@@ -113,51 +113,8 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
                   Are you sure you want to vote for {candidate.name}?
                 </h2>
 
-                <div>
-                  <Form {...form}>
-                    <form
-                      onSubmit={form.handleSubmit(handleVote)}
-                      className="space-y-4 mt-4"
-                    >
-                      <FormField
-                        control={form.control}
-                        name="id"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Enter your voters ID</FormLabel>
-                            <FormControl>
-                              <Input
-                                className="shad-input"
-                                disabled={isSubmitting}
-                                type="number"
-                                placeholder="e.g. '123 - 4467 - 89'"
-                                {...field}
-                              />
-                            </FormControl>
-                            <FormMessage className="text-red" />
-                          </FormItem>
-                       )}
-                      />
-                      
-                      <div className="flex items-center gap-x-2">
-                        <Button
-                          className="bg-red-500"
-                          onClick={() => setVoteModal(!voteModal)}
-                          type="button"
-                        >
-                          Cancel
-                       </Button>
-
-                        <Button
-                          className="shad-button_primary"
-                          disabled={!isValid || isSubmitting}
-                          type="submit"
-                        >
-                          Confirm
-                       </Button>
-                    </div>
-                  </form>
-                </Form>
+                <div className="border border-border w-full p-2 rounded-lg">
+                  
                 </div>
               </div>
               {isValid && users && users.documents.some(user => user.voterId === form.watch('id')) && matchedUser && (
