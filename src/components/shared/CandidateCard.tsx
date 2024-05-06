@@ -5,15 +5,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useGetUsers } from "@/lib/react-query/queries";
 
-import {
-  Form,
-  FormControl,
-  FormLabel,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { useVote } from "@/lib/react-query/queries";
 import { Button } from "@/components/ui";
 
@@ -42,7 +33,6 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
   const [voteModal, setVoteModal] = useState(false);
   const [voted, setVoted] = useState(false);
   const [votes, setVotes] = useState<string[]>(voteList);
-  const [matchedUser, setMatchedUser] = useState<UserDocument | null>(null);
   
   const { data: users } = useGetUsers();
   const { mutate: voteMutation } = useVote();
@@ -52,15 +42,6 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
     defaultValues: { id: '' }, // Initialize id field with an empty string
   });
 
-  const { isSubmitting, isValid } = form.formState;
-
-  useEffect(() => {
-    if (isValid && users) {
-      const matchedUser = users.documents.find(user => user.voterId === form.watch('id')) as UserDocument | undefined;
-      setMatchedUser(matchedUser || null);
-    }
-  }, [isValid, users, form.watch('id')]);
-  
   const handleVote = async (value: z.infer<typeof formSchema>) => {
     if (!voted && candidate) {
       if (!votes.includes(value.id)) { // Check if value.id is not already in votesArray
@@ -117,21 +98,7 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
                   
                 </div>
               </div>
-              {isValid && users && users.documents.some(user => user.voterId === form.watch('id')) && matchedUser && (
-                <div className="fixed top-4 bg-background p-2 rounded-lg z-[50] flex gap-2">
-                  <div className="flex gap-2 items-center">
-                    <img 
-                      src={matchedUser.imageUrl}
-                      className="w-[2.5rem] h-[2.5rem] rounded-full "
-                      alt="User"
-                    />
-                    <div>
-                      <h2 className="font-bold">{matchedUser.name}</h2>
-                      <p>voter's id: {matchedUser.voterId}</p>
-                    </div>
-                  </div>
-                </div>
-              )}
+              
             </div>
           )}
         </>
