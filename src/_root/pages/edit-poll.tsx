@@ -4,13 +4,6 @@ import { useGetPollById } from "@/lib/react-query/queries"
 import { Loader, Banner, Actions } from "@/components/shared"
 import { TitleForm, DescriptionForm, CandidatesForm } from "@/components/forms"
 
-interface Poll {
-  title: string;
-  description: string;
-  isPublished: boolean;
-  // Add other properties as needed
-}
-
 const EditPoll = () => {
   const { id } = useParams()
   
@@ -73,9 +66,8 @@ const EditPoll = () => {
               <h2 className="text-[22px] font-bold text-left w-left">Customize your poll</h2>
             </div>
             <TitleForm
-              initialData={poll as Poll}
+              initialData={poll}
               pollId={poll.$id}
-              type="Poll"
             />
             <DescriptionForm
               initialData={poll}

@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { Pencil } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import { Models } from "appwrite";
 
 import {
   Form,
@@ -17,13 +18,8 @@ import { Button } from "@/components/ui/button";
 import { useUpdatePoll } from "@/lib/react-query/queries";
 
 interface TitleFormProps {
-  initialData: {
-    title: string;
-    description: string; // Add description property
-    isPublished: boolean; // Add isPublished property
-  };
+  initialData: Models.Document;
   pollId: string;
-  type: string;
 }
 
 
@@ -36,7 +32,6 @@ const formSchema = z.object({
 const TitleForm = ({
   initialData,
   pollId,
-  type
 }: TitleFormProps) => {
   const { toast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
@@ -57,22 +52,20 @@ const TitleForm = ({
   // Handler
   const onSubmit = async (value: z.infer<typeof formSchema>) => {
     try {
-      if (type === "Poll") {
-        const updatedPoll = await updatePoll({
-          pollId: pollId,
-          title: value.title, // Assuming initialData has title property
-          description: initialData.description,
-          isPublished: initialData.isPublished, // Assuming initialData has isPublished property
-        });
+      const updatedPoll = await updatePoll({
+        pollId: pollId,
+        title: value.title, // Assuming initialData has title property
+        description: initialData.description,
+        isPublished: initialData.isPublished, // Assuming initialData has isPublished property
+      });
 
-        if (!updatedPoll) {
-          toast({ title: "Failed. Please try again." });
+      if (!updatedPoll) {
+        toast({ title: "Failed. Please try again." });
 
-          return;
-        }
-        toast({title: "Course updated"});
-        toggleEdit();
+        return;
       }
+      toast({title: "Course updated"});
+      toggleEdit();
     } catch {
       toast({ title: "Something went wrong" });
     }
@@ -81,7 +74,7 @@ const TitleForm = ({
   return (
     <div className="shad-input mt-6 p-4">
       <div className="font-medium flex items-center justify-between">
-        {type} title
+        Poll title
         <Button onClick={toggleEdit} className="bg-foreground text-background">
           {isEditing ? (
             <>Cancel</>
