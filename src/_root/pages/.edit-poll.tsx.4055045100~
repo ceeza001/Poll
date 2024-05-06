@@ -4,11 +4,26 @@ import { useGetPollById } from "@/lib/react-query/queries"
 import { Loader, Banner, Actions } from "@/components/shared"
 import { TitleForm, DescriptionForm, CandidatesForm } from "@/components/forms"
 
+interface PollData {
+  title: string;
+  description: string;
+  isPublished: boolean;
+  // Add other properties as needed
+}
 const EditPoll = () => {
   const { id } = useParams()
   
-  const { data: poll } = useGetPollById(id || "");
-
+  const useGetPollById = (id: string): { data: PollData } => {
+  // Implementation to fetch poll data
+  // Assuming pollData is fetched from somewhere
+  const pollData: PollData = { 
+    title: "Sample Title", 
+    description: "Sample Description", 
+    isPublished: false 
+  };
+  
+  return { data: pollData };
+};
   if (!poll)
     return (
       <div className="flex-center w-full h-full dark:invert-white">
@@ -66,7 +81,7 @@ const EditPoll = () => {
               <h2 className="text-[22px] font-bold text-left w-left">Customize your poll</h2>
             </div>
             <TitleForm
-              
+              initialData={poll}
               pollId={poll.$id}
               type="Poll"
             />
