@@ -9,7 +9,10 @@ import {
   Result
 } from "@/_root/pages";
 
+import Signup from "@/_auth/Signup";
+import Signin from "@/_auth/Signin";
 import RootLayout from "./_root/RootLayout";
+import AuthLayout from "./_auth/AuthLayout";
 
 import "./globals.css";
 
@@ -17,6 +20,12 @@ const App = () => {
   return (
     <main className="flex flex-col h-[100dvh]">
       <Routes>
+        {/* auth routes */}
+        <Route element={<AuthLayout />}>
+          <Route path="/sign-up" element={<Signup />} />
+          <Route path="/sign-in" element={<Signin />} />
+        </Route>
+        
         {/* dashboard routes */}
         <Route element={<RootLayout />}>
           <Route index element={<Home />} />
