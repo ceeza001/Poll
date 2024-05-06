@@ -1,8 +1,5 @@
 import { useState } from "react";
 import { Models } from "appwrite";
-import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 
 import { useVote } from "@/lib/react-query/queries";
 import { Button } from "@/components/ui";
@@ -10,14 +7,6 @@ import { Button } from "@/components/ui";
 type UserCardProps = {
   candidate: Models.Document | null;
 };
-
-const formSchema = z.object({
-  id: z.string().min(10, {
-    message: "id must be 10 characters long",
-  }).max(10, {
-    message: "id is invalid",
-  }),
-});
 
 const CandidateCard = ({ candidate }: UserCardProps) => {
   const voteList = candidate?.votes.map((vote: string) => vote);
@@ -27,7 +16,7 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
   
   const { mutate: voteMutation } = useVote();
 
-  const handleVote = async (value: z.infer<typeof formSchema>) => {
+  const handleVote = async () => {
     if (!voted && candidate) {
       if (!votes.includes(value.id)) { // Check if value.id is not already in votesArray
         let votesArray = [...votes];
