@@ -125,7 +125,6 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
                                 disabled={isSubmitting}
                                 type="number"
                                 placeholder="e.g. '123 - 4467 - 89'"
-                                onChange={(e) => setValue(e.target.value)}
                                 {...field}
                               />
                             </FormControl>

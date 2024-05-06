@@ -2,7 +2,7 @@ import { Models } from "appwrite";
 import { useParams, Link } from "react-router-dom"
 
 import { useGetPollById } from "@/lib/react-query/queries"
-import { CandidateCard, Loader } from "@/components/shared"
+import { Loader } from "@/components/shared"
 import { Button } from "@/components/ui"
 
 const Course = () => {
@@ -24,7 +24,7 @@ const Course = () => {
         <h2 className="h2-bold">{poll.title} Results</h2>
         <div className="mt-4 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-6">
           {poll.candidates?.map((candidate: Models.Document, index: string) => (
-            <div className="flex flex-col gap-2 w-full bg-card rounded-lg p-2">
+            <div key={index} className="flex flex-col gap-2 w-full bg-card rounded-lg p-2">
               <div className="aspect-square overflow-hidden">
                 <img
                   src={candidate.imageUrl}
@@ -40,7 +40,7 @@ const Course = () => {
           ))}
         </div>
 
-        <Link to={-1}>
+        <Link to="/polls">
           <Button className="mt-4 shad-button_primary">
             Back
           </Button>
