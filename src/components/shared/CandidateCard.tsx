@@ -26,7 +26,7 @@ const CandidateCard = ({ candidate, poll, onVote }: UserCardProps) => {
     votesArray.push(user.voterId);
     votersArray.push(user.id);
     
-    vote({ votes: votesArray, candidateId: candidate.$id, pollId: poll.$id, voters: votersArray });
+    vote({ votes: votesArray, candidateId: candidate?.$id, pollId: poll?.$id, voters: votersArray });
 
     if (!vote) {
       toast({
@@ -42,18 +42,18 @@ const CandidateCard = ({ candidate, poll, onVote }: UserCardProps) => {
         <>
           <div>
             <img
-              src={candidate.imageUrl}
+              src={candidate?.imageUrl}
               alt="candidate"
               className="rounded-lg w-full aspect-video"
             />
 
             <div className="text-dark-2 w-full flex flex-col justify-between gap-1 mt-4">
-              <h2 className="text-[12px] font-bold">{candidate.name}</h2>
+              <h2 className="text-[12px] font-bold">{candidate?.name}</h2>
             </div>
           </div>
 
           <p className="mt-2 text-gray-500 subtle-semibold">
-            {candidate.slogan}
+            {candidate?.slogan}
           </p>
           
           <Button
@@ -74,7 +74,7 @@ const CandidateCard = ({ candidate, poll, onVote }: UserCardProps) => {
                 <div className="my-2 flex flex-col md:flex-row justify-between gap-2">
                   <div className="flex gap-2 border border-border w-full p-2 rounded-lg">
                     <img
-                      src={candidate.imageUrl}
+                      src={candidate?.imageUrl}
                       className="h-full w-[5rem] rounded-lg border border-border"
                     />
 
