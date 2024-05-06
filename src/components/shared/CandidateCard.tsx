@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Models } from "appwrite";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useGetUsers } from "@/lib/react-query/queries";
 
 import {
   Form,
@@ -33,7 +34,9 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
   const [voteModal, setVoteModal] = useState(false);
   const [voted, setVoted] = useState(false);
   const [votes, setVotes] = useState<string[]>(voteList);
+  const [matchedUser, setMatchedUser] = useState();
   
+  const { data: users } = useGetUsers();
   const { mutate: vote } = useVote();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -41,8 +44,16 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
     defaultValues: { id: '' }, // Initialize id field with an empty string
   });
 
-
   const { isSubmitting, isValid } = form.formState;
+
+  useEffect(() => {
+    if (isValid && users) {
+      const matchedUser = users.documents.find(user => user.voterId === form.watch('id'));
+      if (matchedUser) {
+        setMatchedUser(matchedUser);
+      }
+    }
+  }, [isValid, users, form.watch('id')]);
   
   const handleVote = async (value: z.infer<typeof formSchema>) => {
   if (!voted && candidate) {
@@ -55,12 +66,11 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
       vote({ votes: votesArray, candidateId: candidate.$id });
       // Set voted status to true
       setVoted(true);
-      
+      localStorage.setItem('voted', candidate.$id);
       window.location.reload();
     }
   }
 };
-
 
   return (
     <div className="bg-card w-full shadow-md border flex flex-col justify-between rounded-lg p-2">
@@ -91,9 +101,9 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
           </Button>
 
           {voteModal && (
-            <div className="flex-col flex-center fixed top-0 left-0 right-0 px-4 z-[50] w-screen h-screen bg-dark-2/70">
-              <div className="bg-dark-1 p-2 rounded-lg border shadow-md h-fit w-full mx-auto">
-                <h2 className="text-[13px] text-center font-bold">
+            <div className="flex-col flex-center fixed top-0 left-0 right-0 px-4 z-[50] w-screen h-screen bg-[#000000]/70">
+              <div className="bg-background p-2 rounded-lg border shadow-md h-fit w-full mx-auto">
+                <h2 className="text-[14px] text-center font-bold">
                   Are you sure you want to vote for {candidate.name}?
                 </h2>
 
@@ -115,6 +125,7 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
                                 disabled={isSubmitting}
                                 type="number"
                                 placeholder="e.g. '123 - 4467 - 89'"
+                                onChange={(e) => setValue(e.target.value)}
                                 {...field}
                               />
                             </FormControl>
@@ -125,7 +136,7 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
                       
                       <div className="flex items-center gap-x-2">
                         <Button
-                          className="bg-red"
+                          className="bg-red-500"
                           onClick={() => setVoteModal(!voteModal)}
                           type="button"
                         >
@@ -142,9 +153,28 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
                     </div>
                   </form>
                 </Form>
-                  
                 </div>
               </div>
+              {isValid && users && users.documents.some(user => user.voterId === form.watch('id')) && (
+                <>
+                  {matchedUser && (
+                    <div className="fixed top-4 bg-background p-2 rounded-lg z-[50] flex gap-2">
+                      <div className="flex gap-2 items-center">
+                        <img 
+                          src={matchedUser.imageUrl}
+                          className="w-[2.5rem] h-[2.5rem] rounded-full "
+                          alt="User"
+                        />
+                        <div>
+                          <h2 className="font-bold">{matchedUser.name}</h2>
+                          <p>voter's id: {matchedUser.voterId}</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
+              
             </div>
           )}
         </>

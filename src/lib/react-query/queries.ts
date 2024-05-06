@@ -10,6 +10,7 @@ import {
   signInAccount,
   getCurrentUser,
   signOutAccount,
+  getUsers,
   createPoll,
   deletePoll,
   getPollById,
@@ -52,6 +53,13 @@ export const useGetCurrentUser = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_CURRENT_USER],
     queryFn: getCurrentUser,
+  });
+};
+
+export const useGetUsers = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_USERS],
+    queryFn: () => getUsers(),
   });
 };
 

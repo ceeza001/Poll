@@ -14,7 +14,6 @@ import {
 import { Button, Input } from "@/components/ui";
 import { useCreatePoll } from "@/lib/react-query/queries";
 import { useToast } from "@/components/ui/use-toast";
-import { useUserContext } from "@/context/AuthContext";
 
 const formSchema = z.object({
   title: z.string().min(1, {
@@ -25,7 +24,6 @@ const formSchema = z.object({
 const Create = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { user } = useUserContext();
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -44,7 +42,7 @@ const Create = () => {
   const handleCreatePoll = async (value: z.infer<typeof formSchema>) => {
     const newPoll = await createPoll({
       ...value,
-      userId: user.id,
+      userId: "admin",
     });
 
     if (!newPoll) {

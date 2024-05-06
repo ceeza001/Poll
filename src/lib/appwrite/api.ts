@@ -112,6 +112,23 @@ export async function signOutAccount() {
   }
 }
 
+// ============================== GET COURSES
+export async function getUsers() {
+  try {
+    const users = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+    );
+
+    if (!users) throw new Error("No users found");
+
+    return users;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
 // ============================================================
 // POLLS
 // ============================================================

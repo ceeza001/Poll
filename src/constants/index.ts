@@ -9,21 +9,6 @@ export const navLinks = [
     route: "/polls",
     label: "Polls",
   },
-  {
-    imgURL: "/assets/icons/previous.svg",
-    route: "/previous",
-    label: "Previous",
-  },
-  {
-    imgURL: "/assets/icons/results.svg",
-    route: "/results",
-    label: "Result",
-  },
-  {
-    imgURL: "/assets/icons/create.svg",
-    route: "/create",
-    label: "Create",
-  },
 ];
 
 export const leftSidebarLinks = [
