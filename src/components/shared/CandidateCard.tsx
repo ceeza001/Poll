@@ -11,8 +11,6 @@ type UserCardProps = {
 const CandidateCard = ({ candidate }: UserCardProps) => {
   const voteList = candidate?.votes.map((vote: string) => vote);
   const [voteModal, setVoteModal] = useState(false);
-  const [voted, setVoted] = useState(false);
-  const [votes, setVotes] = useState<string[]>(voteList);
   
   const { mutate: voteMutation } = useVote();
 
@@ -43,9 +41,9 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
           <Button
             onClick={() => setVoteModal(!voteModal)}
             className="w-full shad-button_primary px-5"
-            disabled={voted}
+            
           >
-            {voted ? 'Already Voted' : 'Vote'}
+            Vote
           </Button>
 
           {voteModal && (
