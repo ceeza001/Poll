@@ -17,20 +17,7 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
   const { mutate: voteMutation } = useVote();
 
   const handleVote = async () => {
-    if (!voted && candidate) {
-      if (!votes.includes(value.id)) { // Check if value.id is not already in votesArray
-        let votesArray = [...votes];
-
-        votesArray.push(value.id);
-        setVotes(votesArray);
-        // Perform the vote mutation
-        voteMutation({ votes: votesArray, candidateId: candidate.$id });
-        // Set voted status to true
-        setVoted(true);
-        localStorage.setItem('voted', candidate.$id);
-        window.location.reload();
-      }
-    }
+    
   };
 
   return (
