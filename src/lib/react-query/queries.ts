@@ -139,6 +139,7 @@ export const useDeleteCandidate = () => {
     },
   });
 };
+
 export const useGetPolls = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_POLLS],
@@ -147,8 +148,14 @@ export const useGetPolls = () => {
 };
 
 export const useVote = () => {
+  const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ votes, candidateId }: { votes: string[]; candidateId: string }) =>
-      vote(votes, candidateId),
+    mutationFn: ({ votes, candidateId, pollId, voters }: { votes: string[]; candidateId: string; pollId: string; voters: string[]; }) =>
+      vote(votes, candidateId, pollId, voters ),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POLL_BY_ID],
+      });
+    },
   });
 };

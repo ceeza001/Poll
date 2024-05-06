@@ -15,11 +15,15 @@ const Course = () => {
   
   useEffect(() => {
     // Retrieve votes from local storage when component mounts
-    const voteState = poll?.votes?.find((vote: Models.Document) => vote.$id === user.id);
+    const voteState = poll?.votes?.find((vote: Models.Document) => vote === user.id);
     if (voteState !== undefined) {
       setVoted(true);
     }
   }, [poll, user.id]);
+
+  const handleVote = () => {
+    setVoted(true);
+  };
 
   if (!poll) {
     return (
@@ -31,8 +35,9 @@ const Course = () => {
 
   if (voted) {
     return (
-      <div className="flex-center flex-col h-[70vh] w-full">
-        <h2 className="h2-bold">you have already voted, go to results</h2>
+      <div className="flex-center text-center flex-col h-[70vh] w-full p-4">
+        <h2 className="h2-bold">Congratulations you have successfully voted</h2>
+        <p>go to results</p>
         <Link to={`/results/${poll.$id}`}>
           <Button className="mt-4 shad-button_primary">
             Results
@@ -66,7 +71,7 @@ const Course = () => {
         <div className="mt-4 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-6">
           {poll.candidates?.map((candidate: Models.Document, index: string) => (
             <CandidateCard 
-              candidate={candidate} key={index}
+              candidate={candidate} key={index} poll={poll} onVote={handleVote}
             />
           ))}
         </div>

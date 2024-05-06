@@ -19,9 +19,9 @@ const Course = () => {
 
   return (
     <div className="flex flex-1">
-      <div className="p-4">
+      <div className="p-4 w-full">
 
-        <div className="rounded-lg p-2 flex justify-between items-center">
+        <div className="rounded-lg p-2 flex justify-between items-center w-full">
           <h2 className="h2-bold">{poll.title} results</h2>
           <Link to={`/polls/${id}`}>
             <Button className="shad-button_primary">

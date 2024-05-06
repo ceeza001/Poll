@@ -381,9 +381,9 @@ export async function deleteCandidate(candidateId?: string, fileId?: string) {
 }
 
 // ============================== VOTE
-export async function vote(votes: string[], candidateId: string) {
+export async function vote(votes: string[], candidateId: string, pollId: string, voters: string[], ) {
   try {
-    const updatedVoter = await databases.updateDocument(
+    const updatedVotes = await databases.updateDocument(
       appwriteConfig.databaseId,
       appwriteConfig.candidatesCollectionId,
       candidateId,
@@ -392,9 +392,18 @@ export async function vote(votes: string[], candidateId: string) {
       }
     );
 
-    if (!updatedVoter) throw Error;
+    const updatedPoll = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.pollCollectionId,
+      pollId,
+      {
+        votes: voters,
+      }
+    );
 
-    return updatedVoter;
+    if (!updatedVotes || !updatedPoll) throw Error;
+
+    return updatedVotes;
   } catch (error) {
     console.log(error);
   }
