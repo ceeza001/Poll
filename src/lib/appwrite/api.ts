@@ -20,12 +20,14 @@ export async function createUserAccount(user: INewUser) {
     if (!newAccount) throw Error;
 
     const avatarUrl = avatars.getInitials(user.name);
-
+    const voterId = user.voterNo;
+    
     const newUser = await saveUserToDB({
       accountId: newAccount.$id,
       email: newAccount.email,
       name: newAccount.name,
       imageUrl: avatarUrl,
+      voterId: voterId,
     });
 
     return newUser;
@@ -41,6 +43,7 @@ export async function saveUserToDB(user: {
   email: string;
   name: string;
   imageUrl: URL;
+  voterId: string;
 }) {
   try {
     const newUser = await databases.createDocument(

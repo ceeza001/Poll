@@ -37,7 +37,7 @@ const Topbar = () => {
     <section className="topbar">
       <div className="flex-between p-2">
         <Link to="/" className="flex gap-3 items-center">
-          <h2 className="h2-bold text-[#275817]">FG Poll</h2>
+          <h2 className="h2-bold text-[#275817]">E-Voting</h2>
         </Link>
         
         <Sheet>
@@ -62,7 +62,7 @@ const Topbar = () => {
               </SheetTitle>
 
               <SheetDescription>
-                <div className="flex flex-col">
+                <div className="mt-4 flex flex-col">
                   {navLinks.map((link) => (
                     <Link
                       key={link.label}
@@ -77,10 +77,39 @@ const Topbar = () => {
                       <h2 className="text-[14px] font-semibold">{link.label}</h2>
                     </Link>
                   ))}
+                    
+                  {!user.isAdmin && (
+                    <Link
+                      to="/admin"
+                      className="flex items-center gap-2 p-2 hover:bg-gray-100 dark:hover:bg-dark-700 rounded-lg"
+                    >
+                      <img
+                        src="/assets/icons/profile.svg"
+                        alt="admin"
+                        className="w-[1.7rem] h-[1.7rem] border border-border rounded-full"
+                      />
+                      <h2 className="text-[14px] font-semibold">Admin</h2>
+                    </Link>
+                  )}
                 </div>
               </SheetDescription>
             </SheetHeader>
             <SheetFooter>
+              <Link to="/create">
+                <SheetTrigger
+                  className="mb-2 flex rounded-lg justify-center items-center shad-button_dark p-2 w-full"
+                >  
+                  <img 
+                    src="/assets/icons/create.svg" 
+                    alt="logout" 
+                    width={24}
+                    height={24}
+                    className="invert-white"
+                  />
+                  <p className="small-medium lg:base-medium">Create</p>
+                </SheetTrigger>
+              </Link>
+            
               <Button
                 className="shad-button_primary w-full"
                 onClick={(e) => handleSignOut(e)}>

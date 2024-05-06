@@ -26,6 +26,7 @@ const SignUp = () => {
     defaultValues: {
       email: "",
       name: "",
+      voterId: "",
       password: "",
     },
   });
@@ -77,7 +78,7 @@ const SignUp = () => {
   return (
     <Form {...form}>
       <div className="text-foreground p-[1rem] w-full sm:w-420 flex-center flex-col">
-        <h2 className="h1-bold">L.M.S</h2>
+        <h2 className="h1-bold">E-Voting</h2>
 
         <h2 className="h2-bold pt-5 sm:pt-12">
           Create an account
@@ -127,6 +128,28 @@ const SignUp = () => {
                   </FormLabel>
                   <FormControl>
                     <Input type="text" placeholder="Email" className="shad-input z-[-1] pl-10" {...field} />
+                  </FormControl>
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="voterId"
+            render={({ field }) => (
+              <FormItem className="relative">
+                <div className="relative">
+                  <FormLabel className="absolute top-[23%] left-2 z-50">
+                    <img 
+                      src="/assets/icons/id.svg"
+                      alt="user"
+                      className="w-6 h-6 dark:invert-white"
+                    />
+                  </FormLabel>
+                  <FormControl>
+                    <Input type="text" placeholder="Voter's ID" className="shad-input z-[-1] pl-10" {...field} />
                   </FormControl>
                 </div>
                 <FormMessage />

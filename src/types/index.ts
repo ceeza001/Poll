@@ -36,4 +36,5 @@ export type INewUser = {
   email: string;
   name: string;
   password: string;
+  voterNo: string;
 };

@@ -72,8 +72,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       cookieFallback === undefined
     ) {
       navigate("/sign-in");
-    } else {
-      navigate("/");
     }
     checkAuthUser();
   }, []);

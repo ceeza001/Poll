@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 
-import { leftSidebarLinks } from "@/constants";
+import { navLinks } from "@/constants";
 
 const LeftSidebar = () => {
   const { pathname } = useLocation();
@@ -13,7 +13,7 @@ const LeftSidebar = () => {
         </Link>
 
         <div className="rounded-lg bg-card p-2">
-          {leftSidebarLinks.map((link) => {
+          {navLinks.map((link) => {
             const isActive = pathname === link.route;
             return (
               <Link

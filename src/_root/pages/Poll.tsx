@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Models } from "appwrite";
 import { useParams, Link } from "react-router-dom"
+import { useUserContext } from "@/context/AuthContext";
 
 import { useGetPollById } from "@/lib/react-query/queries"
 import { CandidateCard, Loader } from "@/components/shared"
@@ -8,17 +9,18 @@ import { Button } from "@/components/ui"
 
 const Course = () => {
   const { id } = useParams();
+  const { user } = useUserContext();
   const { data: poll } = useGetPollById(id || "");
   const [voted, setVoted] = useState(false);
   
   useEffect(() => {
     // Retrieve votes from local storage when component mounts
-    const voteState = localStorage.getItem("voted");
-    if (voteState !== null) {
+    const voteState = poll?.votes?.find((vote) => vote.$id === user.id);
+    if (voteState !== undefined) {
       setVoted(true);
     }
-  }, []);
-  
+  }, [poll, user.id]);
+
   if (!poll) {
     return (
       <div className="flex-center flex-col h-full w-full">

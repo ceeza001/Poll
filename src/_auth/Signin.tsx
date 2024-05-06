@@ -57,7 +57,7 @@ const SignIn = () => {
   return (
     <Form {...form}>
       <div className="text-foreground p-[1rem] w-full sm:w-420 flex-center flex-col">
-        <h2 className="h1-bold">L.M.S</h2>
+        <h2 className="h1-bold">E-Voting</h2>
 
         <h2 className="h2-bold pt-5 sm:pt-12">
           Welcome back!
