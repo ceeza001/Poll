@@ -20,20 +20,22 @@ const CandidateCard = ({ candidate, poll, onVote }: UserCardProps) => {
   const { mutate: vote } = useVote();
   
   const handleVote = async () => {
-    let votesArray = candidate?.votes;
-    let votersArray = poll?.votes;
+    if (!candidate) {
+      let votesArray = candidate?.votes;
+      let votersArray = poll?.votes;
     
-    votesArray.push(user.voterId);
-    votersArray.push(user.id);
+      votesArray.push(user.voterId);
+      votersArray.push(user.id);
     
-    vote({ votes: votesArray, candidateId: candidate.$id, pollId: poll.$id, voters: votersArray });
+      vote({ votes: votesArray, candidateId: candidate.$id, pollId: poll.$id, voters: votersArray });
 
-    if (!vote) {
-      toast({
-        title: `vote failed. Please try again.`,
-      });
+      if (!vote) {
+        toast({
+          title: `vote failed. Please try again.`,
+        });
+      }
+      onVote();
     }
-    onVote();
   };
 
   if (!candidate) return null;
