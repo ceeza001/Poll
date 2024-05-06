@@ -26,7 +26,7 @@ const CandidateCard = ({ candidate, poll, onVote }: UserCardProps) => {
     votesArray.push(user.voterId);
     votersArray.push(user.id);
     
-    vote({ votes: votesArray, candidateId: candidate?.$id, pollId: poll?.$id, voters: votersArray });
+    vote({ votes: votesArray, candidateId: candidate.$id, pollId: poll.$id, voters: votersArray });
 
     if (!vote) {
       toast({
@@ -35,6 +35,8 @@ const CandidateCard = ({ candidate, poll, onVote }: UserCardProps) => {
     }
     onVote();
   };
+
+  if (!candidate) return null;
   
   return (
     <div className="bg-card w-full shadow-md border flex flex-col justify-between rounded-lg p-2">
