@@ -1,23 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Models } from "appwrite";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useGetUsers } from "@/lib/react-query/queries";
 
 import { useVote } from "@/lib/react-query/queries";
 import { Button } from "@/components/ui";
 
 type UserCardProps = {
   candidate: Models.Document | null;
-};
-
-type UserDocument = {
-  $id: string;
-  imageUrl: string;
-  name: string;
-  voterId: string;
-  // Add other properties as needed
 };
 
 const formSchema = z.object({
@@ -34,13 +25,7 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
   const [voted, setVoted] = useState(false);
   const [votes, setVotes] = useState<string[]>(voteList);
   
-  const { data: users } = useGetUsers();
   const { mutate: voteMutation } = useVote();
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: { id: '' }, // Initialize id field with an empty string
-  });
 
   const handleVote = async (value: z.infer<typeof formSchema>) => {
     if (!voted && candidate) {
@@ -95,7 +80,7 @@ const CandidateCard = ({ candidate }: UserCardProps) => {
                 </h2>
 
                 <div className="border border-border w-full p-2 rounded-lg">
-                  
+                  <Button onClick={handleVote}>Vote</Button>
                 </div>
               </div>
               
