@@ -66,7 +66,7 @@ const EditPoll = () => {
               <h2 className="text-[22px] font-bold text-left w-left">Customize your poll</h2>
             </div>
             <TitleForm
-              
+              initialData={[]}
               pollId={poll.$id}
               type="Poll"
             />
