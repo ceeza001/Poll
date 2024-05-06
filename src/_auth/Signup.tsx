@@ -17,7 +17,7 @@ import { useUserContext } from "@/context/AuthContext";
 const SignUp = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { checkAuthUser } = useUserContext();
+  const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
 
   const [showPassword, setShowPassword] = useState(false);
   
@@ -166,7 +166,7 @@ const SignUp = () => {
           />
 
           <Button type="submit" className="shad-button_primary body-bold">
-            {isCreatingAccount || isSigningInUser ? (
+            {isCreatingAccount || isSigningInUser || isUserLoading ? (
               <div className="flex-center gap-2">
                 <Loader /> Loading...
               </div>
