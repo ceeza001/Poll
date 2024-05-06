@@ -9,7 +9,6 @@ type UserCardProps = {
 };
 
 const CandidateCard = ({ candidate }: UserCardProps) => {
-  const voteList = candidate?.votes.map((vote: string) => vote);
   const [voteModal, setVoteModal] = useState(false);
   
   const handleVote = async () => {
