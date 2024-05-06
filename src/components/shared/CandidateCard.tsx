@@ -20,8 +20,8 @@ const CandidateCard = ({ candidate, poll, onVote }: UserCardProps) => {
   const { mutate: vote } = useVote();
   
   const handleVote = async () => {
-    let votesArray = candidate.votes;
-    let votersArray = poll.votes;
+    let votesArray = candidate?.votes;
+    let votersArray = poll?.votes;
     
     votesArray.push(user.voterId);
     votersArray.push(user.id);

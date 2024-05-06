@@ -15,7 +15,7 @@ const Course = () => {
   
   useEffect(() => {
     // Retrieve votes from local storage when component mounts
-    const voteState = poll?.votes?.find((vote: Models.Document) => vote === user.id);
+    const voteState = poll?.votes?.find((vote: string) => vote === user.id);
     if (voteState !== undefined) {
       setVoted(true);
     }
