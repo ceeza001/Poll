@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Models } from "appwrite";
 
-import { useVote } from "@/lib/react-query/queries";
 import { Button } from "@/components/ui";
 
 type UserCardProps = {
