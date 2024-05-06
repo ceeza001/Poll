@@ -1,6 +1,10 @@
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import { navLinks } from "@/constants";
+import { Button } from "../ui/button";
+import { useUserContext, INITIAL_USER } from "@/context/AuthContext";
+import { useSignOutAccount } from "@/lib/react-query/queries";
 
 import {
   Sheet,
@@ -8,10 +12,26 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
+  SheetFooter,
   SheetTrigger,
 } from "@/components/ui/sheet";
 
 const Topbar = () => {
+  const navigate = useNavigate();
+  const { user, setIsAuthenticated, setUser } = useUserContext();
+  const { mutate: signOut, isSuccess } = useSignOutAccount();
+  
+  const handleSignOut = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    signOut();
+    setIsAuthenticated(false);
+    setUser(INITIAL_USER);
+  };
+  useEffect(() => {
+    if (isSuccess) navigate('/sign-in');
+  }, [isSuccess]);
   
   return (
     <section className="topbar">
@@ -31,8 +51,13 @@ const Topbar = () => {
           <SheetContent>
             <SheetHeader>
               <SheetTitle>
-                <div className=" p-2 border-b">
-                  FG Poll
+                <div className="rounded-lg shadow-lg border border-border p-2 flex items-center gap-2">
+                  <img 
+                    src={user.imageUrl}
+                    alt={user.name}
+                    className="w-[2.3rem] h-[2.3rem] rounded-full"
+                  />
+                  <h2 className="text-[14px] truncate">{user.name}</h2>
                 </div>
               </SheetTitle>
 
@@ -55,6 +80,20 @@ const Topbar = () => {
                 </div>
               </SheetDescription>
             </SheetHeader>
+            <SheetFooter>
+              <Button
+                className="shad-button_primary w-full"
+                onClick={(e) => handleSignOut(e)}>
+                <img 
+                  src="/assets/icons/logout.svg" 
+                  alt="logout" 
+                  width={24}
+                  height={24}
+                  className="invert-white"
+                />
+                <p className="small-medium lg:base-medium">Logout</p>
+              </Button>
+            </SheetFooter>
           </SheetContent>
         </Sheet>
       </div>
