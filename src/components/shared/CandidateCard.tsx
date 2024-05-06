@@ -20,14 +20,15 @@ const CandidateCard = ({ candidate, poll, onVote }: UserCardProps) => {
   const { mutate: vote } = useVote();
   
   const handleVote = async () => {
-    if (!candidate) {
+    if (candidate) {
       let votesArray = candidate?.votes;
       let votersArray = poll?.votes;
-    
+      let candidateId = candidate?.$id;
+      
       votesArray.push(user.voterId);
       votersArray.push(user.id);
     
-      vote({ votes: votesArray, candidateId: candidate.$id, pollId: poll.$id, voters: votersArray });
+      vote({ votes: votesArray, candidateId: candidateId, pollId: poll.$id, voters: votersArray });
 
       if (!vote) {
         toast({
