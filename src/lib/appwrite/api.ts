@@ -141,7 +141,6 @@ export function getFilePreview(fileId: string) {
       fileId,
       2000,
       2000,
-      top,
       100
     );
 
