@@ -29,12 +29,13 @@ export type IUser = {
   name: string;
   email: string;
   imageUrl: string;
-  votersNo: string;
+  voterId: string;
+  isAdmin: boolean;
 };
 
 export type INewUser = {
   email: string;
   name: string;
   password: string;
-  voterNo: string;
+  voterId: string;
 };

@@ -20,7 +20,7 @@ export async function createUserAccount(user: INewUser) {
     if (!newAccount) throw Error;
 
     const avatarUrl = avatars.getInitials(user.name);
-    const voterId = user.voterNo;
+    const voterId = user.voterId;
     
     const newUser = await saveUserToDB({
       accountId: newAccount.$id,
