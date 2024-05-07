@@ -12,17 +12,13 @@ export default function AuthLayout() {
   return (
     <>
       <section className="flex flex-1 justify-center items-center flex-col">
-        <Outlet />
+        <div className="rounded-lg border border-border md:max-w-2/3">
+          <Outlet />
+        </div>
       </section>
 
       <footer className="w-full text-center p-[0.5rem] border-t border-border">
-        <div className="flex small-regular flex-center gap-2 w-full">
-          <p>Privacy Policy</p> | <p>Terms And Conditions</p>
-        </div>
-
-        <div>
-          <p>©2024 L.M.S. All rights reserved.</p>
-        </div>
+        Nigerian Navy Secondary School
       </footer>
     </>
   );

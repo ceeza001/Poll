@@ -10,7 +10,7 @@ const RootLayout = () => {
         <Topbar />
         <LeftSidebar />
         
-        <section className="w-full mb-[3.4rem]">
+        <section className="w-full">
           <Outlet />
         </section>
       </div>

@@ -175,7 +175,7 @@
 
     /* Home */
     .home-container {
-      @apply flex flex-col flex-1 overflow-scroll p-4 md:px-8 lg:p-14 custom-scrollbar;
+      @apply flex flex-col flex-1 overflow-scroll p-4 md:py-6 custom-scrollbar;
     }
     /* Dashboard */
     .dashboard-container {
