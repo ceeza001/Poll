@@ -58,7 +58,7 @@ export const Actions = ({
       console.log("deleting...");
       
       toast({ title: "Course deleted" });
-      navigate(`/dashboard/${poll.creator.$id}`);
+      navigate(`/polls`);
     } catch {
       toast({ title: "Something went wrong" });
     } finally {

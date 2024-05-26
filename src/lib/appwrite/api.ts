@@ -1,7 +1,7 @@
 import { ID } from "appwrite";
 
 import { appwriteConfig, account, databases, storage, avatars } from "./config";
-import { INewPoll, INewCandidate, INewUser, IUpdatePoll } from "@/types";
+import { IUpdateUser, INewPoll, INewCandidate, INewUser, IUpdatePoll } from "@/types";
 
 // ============================================================
 // AUTH
@@ -129,6 +129,36 @@ export async function getUsers() {
   } catch (error) {
     console.log(error);
     return null;
+  }
+}
+
+// ============================== UPDATE COURSE
+export async function updateUser(user: IUpdateUser) {
+  try {
+     //  Update Course
+    const updatedUser = await databases.updateDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.userCollectionId,
+      user.userId,
+      {
+        status: user.status,
+        isAdmin: user.isAdmin,
+      }
+    );
+
+    // Failed to update
+    if (!updatedUser) {
+      // Delete new file that has been recently uploaded
+      
+      // If no new file uploaded, just throw error
+      throw Error;
+    }
+
+    // Safely delete old file after successful update
+    
+    return updatedUser;
+  } catch (error) {
+    console.log(error);
   }
 }
 

@@ -4,7 +4,7 @@ import { useParams, Link } from "react-router-dom"
 import { useUserContext } from "@/context/AuthContext";
 
 import { useGetPollById } from "@/lib/react-query/queries"
-import { CandidateCard, Loader } from "@/components/shared"
+import { CandidateCard, Banner, Loader } from "@/components/shared"
 import { Button } from "@/components/ui"
 
 const Course = () => {
@@ -49,8 +49,19 @@ const Course = () => {
   
   return (
     <div className="flex flex-1">
-      <div className="p-4">
+      <div className="p-4 w-full">
+        {user.status === 'unverified' && (
+          <Banner
+          label="Your account is unverified. Request verification from an admin to vote."
+          />
+        )}
 
+        {user.status === 'blocked' && (
+          <Banner
+          label="Your account has been blocked."
+          />
+        )}
+        
         <div className="mb-2 rounded-lg p-2 flex justify-between items-center">
           <h2 className="h2-bold">{poll.title}</h2>
           <Link to={`/results/${poll.$id}`}>
@@ -60,7 +71,9 @@ const Course = () => {
           </Link>
         </div>
         
-        <div className="w-full h-[15rem] rounded-lg overflow-hidden border border-dark-4">
+        {user.status ==='verified' && (
+          <>
+            <div className="w-full h-[15rem] rounded-lg overflow-hidden border border-dark-4">
           <img 
             src="/assets/images/hero.jpeg"
             className="w-full h-full"
@@ -68,13 +81,15 @@ const Course = () => {
           />
         </div>
 
-        <div className="mt-4 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-6">
+            <div className="mt-4 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-6">
           {poll.candidates?.map((candidate: Models.Document, index: string) => (
             <CandidateCard 
               candidate={candidate} key={index} poll={poll} onVote={handleVote}
             />
           ))}
         </div>
+          </>
+        )}
       </div>
     </div>
   )

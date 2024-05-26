@@ -72,11 +72,25 @@ const Topbar = () => {
                       <img
                         src={link.imgURL}
                         alt={link.label}
-                        className="w-[1.7rem] h-[1.7rem]"
+                        className="w-[1.7rem] h-[1.7rem] dark:invert-white"
                       />
                       <h2 className="text-[14px] font-semibold">{link.label}</h2>
                     </Link>
                   ))}
+
+                  {user.isAdmin && (
+                    <Link
+                      to="/admin"
+                      className="flex items-center gap-2 p-2 hover:bg-gray-100 dark:hover:bg-dark-700 rounded-lg"
+                    >
+                      <img
+                        src="/assets/icons/profile.svg"
+                        alt="admin"
+                        className="w-[1.7rem] h-[1.7rem] dark:invert-white"
+                      />
+                      <h2 className="text-[14px] font-semibold">Administrator</h2>
+                    </Link>
+                  )}
                 </div>
               </SheetDescription>
             </SheetHeader>

@@ -9,6 +9,12 @@ export type INewPoll = {
   title: string;
 };
 
+export type IUpdateUser = {
+  userId: string;
+  isAdmin: boolean;
+  status: string;
+};
+
 export type IUpdatePoll = {
   pollId: string;
   title: string;

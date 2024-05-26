@@ -2,11 +2,16 @@ import { Link } from "react-router-dom";
 
 import { useGetPolls } from "@/lib/react-query/queries";
 import { Button } from "@/components/ui"
+import { useUserContext } from "@/context/AuthContext";
 
 const Polls = () => {
+  const { user } = useUserContext();
   const { data: polls } = useGetPolls();
   
   if (!polls) return null;
+
+  // Sort polls by creation date in descending order
+  const sortedPolls = [...polls.documents].reverse();
 
   const handleCopyInvitation = (invitationLink: string) => {
     // Copy invitation link to clipboard
@@ -34,15 +39,21 @@ const Polls = () => {
       </div>
 
       <div className="mt-4 grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-6">
-        {polls.documents.map((poll) => (
+        {sortedPolls.map((poll) => (
           <div
             key={poll.$id}
             className="flex flex-col gap-2 rounded-lg bg-card shadow-md border border-border p-2">
-            <div className="w-[2rem] h-[2rem] flex-start gap-3 justify-start">
+            <div className="w-full h-[2rem] flex items-center justify-between">
               <img 
                 src="/assets/icons/upcoming.svg"
-                className="h-full w-full dark:invert-white"
+                className="h-full w-[2rem] dark:invert-white"
               />
+              {poll.creator.$id === user.id && (
+                <Link to={`/edit/polls/${poll.$id}`}
+                  className="body-bold">
+                  Edit
+                </Link>
+              )}
             </div>
 
             <div>

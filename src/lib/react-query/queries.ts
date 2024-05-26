@@ -11,6 +11,7 @@ import {
   getCurrentUser,
   signOutAccount,
   getUsers,
+  updateUser,
   createPoll,
   deletePoll,
   getPollById,
@@ -20,7 +21,7 @@ import {
   getPolls,
   vote
 } from "@/lib/appwrite/api";
-import { INewPoll, INewCandidate, INewUser, IUpdatePoll } from "@/types";
+import { IUpdateUser, INewPoll, INewCandidate, INewUser, IUpdatePoll } from "@/types";
 
 // ============================================================
 // AUTH QUERIES
@@ -60,6 +61,18 @@ export const useGetUsers = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_USERS],
     queryFn: () => getUsers(),
+  });
+};
+
+export const useUpdateUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (user: IUpdateUser) => updateUser(user),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_USERS],
+      });
+    },
   });
 };
 

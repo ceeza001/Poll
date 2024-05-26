@@ -6,7 +6,8 @@ import {
   Poll,
   EditPoll,
   Polls,
-  Result
+  Result,
+  Admin
 } from "@/_root/pages";
 
 import Signup from "@/_auth/Signup";
@@ -34,6 +35,7 @@ const App = () => {
           <Route path="/polls/:id" element={<Poll />} />
           <Route path="/polls" element={<Polls />} />
           <Route path="/results/:id" element={<Result />} />
+          <Route path="/Admin" element={<Admin />} />
           <Route path="*" element={<div>404 Not found</div>} />
         </Route>
 

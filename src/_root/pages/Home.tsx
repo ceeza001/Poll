@@ -11,10 +11,10 @@ const Home = () => {
         <h2 className="text-[20px] font-bold text-left w-left">The Need for Change:</h2>
 
         <div className="flex flex-wrap md:flex-nowrap justify-between gap-4 my-2">
-          <div className="rounded-lg p-2 bg-foreground text-white font-semibold">
+          <div className="rounded-lg p-2 bg-foreground text-background font-semibold">
             <p>Traditional voting systems often come with challenges such as long queues, limited accessibility for people with disabilities, and logistical hurdles.</p>
           </div>
-          <div className="rounded-lg p-2 bg-foreground text-white font-semibold">
+          <div className="rounded-lg p-2 bg-foreground text-background font-semibold">
             <p>Our E-Voting website addresses these issues by providing a digital platform where users can cast their votes from the comfort of their homes or any location with internet access.</p>
           </div>
         </div>
@@ -73,10 +73,10 @@ const Home = () => {
         <h2 className="text-[20px] font-bold text-left w-left">Future Developments</h2>
 
         <div className="flex flex-wrap md:flex-nowrap justify-between gap-4 my-2">
-          <div className="rounded-lg p-2 bg-foreground text-white font-semibold">
+          <div className="rounded-lg p-2 bg-foreground text-background font-semibold">
             <p>We're committed to continuously improving our platform based on user feedback and technological advancements.</p>
           </div>
-          <div className="rounded-lg p-2 bg-foreground text-white font-semibold">
+          <div className="rounded-lg p-2 bg-foreground text-background font-semibold">
             <p>Future iterations may include features such as blockchain integration for enhanced security and verifiability.</p>
           </div>
         </div>
