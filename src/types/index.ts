@@ -37,7 +37,7 @@ export type IUser = {
   imageUrl: string;
   voterId: string;
   isAdmin: boolean;
-  status?: 'verified' | 'blocked' | 'unverified';
+  status?: string;
 };
 
 export type INewUser = {
