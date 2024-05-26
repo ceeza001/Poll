@@ -11,8 +11,8 @@ export type INewPoll = {
 
 export type IUpdateUser = {
   userId: string;
-  isAdmin: boolean;
-  status: string;
+  isAdmin?: boolean;
+  status?: 'verified' | 'blocked' | 'unverified';
 };
 
 export type IUpdatePoll = {
