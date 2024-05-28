@@ -33,7 +33,7 @@ export async function createUserAccount(user: INewUser) {
     return newUser;
   } catch (error) {
     console.log(error);
-    return error;
+    throw error;
   }
 }
 
@@ -67,6 +67,7 @@ export async function signInAccount(user: { email: string; password: string }) {
     return session;
   } catch (error) {
     console.log(error);
+    throw error;
   }
 }
 

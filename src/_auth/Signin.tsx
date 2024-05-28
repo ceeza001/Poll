@@ -20,7 +20,8 @@ const SignIn = () => {
   const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
 
   const [showPassword, setShowPassword] = useState(false);
-
+  const [errorMessage, setErrorMessage] = useState("");
+  
   // Query
   const { mutateAsync: signInAccount, isPending } = useSignInAccount();
 
@@ -33,7 +34,8 @@ const SignIn = () => {
   });
 
   const handleSignin = async (user: z.infer<typeof SigninValidation>) => {    
-    const session = await signInAccount(user);
+    try {
+      const session = await signInAccount(user);
 
     if (!session) {
       toast({ title: "Login failed. Please try again." });
@@ -41,16 +43,21 @@ const SignIn = () => {
       return;
     }
 
+    setErrorMessage(""); // Reset error message if successful login
+      
     const isLoggedIn = await checkAuthUser();
 
     if (isLoggedIn) {
       form.reset();
 
       navigate("/");
-    } else {
-      toast({ title: "Login failed. Please try again.", });
-
-      return;
+      } else {
+        toast({ title: "Login failed. Please try again.", });
+      }
+    } catch (error) {
+      // Use assertion to tell TypeScript the type of error
+      setErrorMessage((error as Error)?.message || "Unknown error");
+      toast({ title: (error as Error)?.message || "Unknown error" });
     }
   };
 
@@ -63,10 +70,15 @@ const SignIn = () => {
           Welcome back!
         </h2>
 
-        <p className="text-center small-medium md:base-regular mt-2">
-          Let's keep the momentum going.
-        </p>
-        
+        {!errorMessage ?
+          <p className="text-center small-medium md:base-regular mt-2">
+            Welcome back! Please enter your details.
+          </p>
+        :
+          <p className="text-red-500 text-center mx-auto small-medium md:base-regular mt-2">
+            {errorMessage}
+          </p>
+        }
         <form
           onSubmit={form.handleSubmit(handleSignin)}
           className="flex flex-col gap-5 w-full mt-4">

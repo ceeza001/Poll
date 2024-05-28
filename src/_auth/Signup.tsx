@@ -20,6 +20,7 @@ const SignUp = () => {
   const { checkAuthUser, isLoading: isUserLoading } = useUserContext();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   
   const form = useForm<z.infer<typeof SignupValidation>>({
     resolver: zodResolver(SignupValidation),
@@ -46,6 +47,8 @@ const SignUp = () => {
         return;
       }
 
+      setErrorMessage("");
+      
       const session = await signInAccount({
         email: user.email,
         password: user.password,
@@ -72,6 +75,9 @@ const SignUp = () => {
       }
     } catch (error) {
       console.log({ error });
+      // Use assertion to tell TypeScript the type of error
+      setErrorMessage((error as Error)?.message || "Unknown error");
+      toast({ title: (error as Error)?.message || "Unknown error" });
     }
   };
   
@@ -84,9 +90,15 @@ const SignUp = () => {
           Create an account
         </h2>
 
-        <p className="text-center small-medium md:base-regular mt-2">
-          Unlock Knowledge, Empower Growth. Learning Elevated.
+        {!errorMessage ?
+          <p className="text-center small-medium md:base-regular mt-2">
+           Enter your credentials to use this platform.
         </p>
+        :
+          <p className="text-red-500 text-center mx-auto small-medium md:base-regular mt-2">
+            A user with the same email, already exists.
+          </p>
+        }
         
         <form
           onSubmit={form.handleSubmit(handleSignup)}
