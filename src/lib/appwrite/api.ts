@@ -8,8 +8,38 @@ import { IUpdateUser, INewPoll, INewCandidate, INewUser, IUpdatePoll } from "@/t
 // ============================================================
 
 // ============================== SIGN UP
+async function checkVoterInDB(voterId: string): Promise<boolean> {
+  try {
+    // Fetch all documents from the voters collection
+    const ids = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.votersCollectionId,
+    );
+
+    if (!ids || ids.documents.length === 0) {
+      throw new Error("No voters found");
+    }
+
+    // Find the document where the voterId matches
+    const voter = ids.documents.find(doc => doc.voterId === voterId);
+
+    return !!voter; // Return true if a voter is found, otherwise false
+  } catch (error) {
+    console.error("Error checking voter ID:", error);
+    throw error;
+  }
+}
+
 export async function createUserAccount(user: INewUser) {
   try {
+    // Check if the voter ID exists in the database
+    const voterExists = await checkVoterInDB(user.voterId);
+    
+    if (!voterExists) {
+      throw new Error("Voter ID not found in the database.");
+    }
+
+    // Proceed with creating a new account
     const newAccount = await account.create(
       ID.unique(),
       user.email,
@@ -20,14 +50,13 @@ export async function createUserAccount(user: INewUser) {
     if (!newAccount) throw Error;
 
     const avatarUrl = avatars.getInitials(user.name);
-    const voterId = user.voterId;
     
     const newUser = await saveUserToDB({
       accountId: newAccount.$id,
       email: newAccount.email,
       name: newAccount.name,
       imageUrl: avatarUrl,
-      voterId: voterId,
+      voterId: user.voterId,
     });
 
     return newUser;

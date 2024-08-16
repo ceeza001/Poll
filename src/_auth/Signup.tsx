@@ -96,7 +96,7 @@ const SignUp = () => {
         </p>
         :
           <p className="text-red-500 text-center mx-auto small-medium md:base-regular mt-2">
-            A user with the same email, already exists.
+            {errorMessage === 'Voter ID not found in the database.' ? errorMessage : 'A user with the same email, already exists.'}
           </p>
         }
         

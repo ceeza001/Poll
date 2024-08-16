@@ -7,7 +7,7 @@ export const appwriteConfig = {
   storageId: import.meta.env.VITE_APPWRITE_STORAGE_ID,
   userCollectionId: import.meta.env.VITE_APPWRITE_USER_COLLECTION_ID,
   pollCollectionId: import.meta.env.VITE_APPWRITE_POLL_COLLECTION_ID,
-  courseCollectionId: import.meta.env.VITE_APPWRITE_COURSE_COLLECTION_ID,
+  votersCollectionId: import.meta.env.VITE_APPWRITE_VOTERID_COLLECTION_ID,
   candidatesCollectionId: import.meta.env.VITE_APPWRITE_CANDIDATE_COLLECTION_ID,
 };
 
