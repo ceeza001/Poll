@@ -20,7 +20,7 @@ const Topbar = () => {
   const navigate = useNavigate();
   const { user, setIsAuthenticated, setUser } = useUserContext();
   const { mutate: signOut, isSuccess } = useSignOutAccount();
-  
+  console.log(user);
   const handleSignOut = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {

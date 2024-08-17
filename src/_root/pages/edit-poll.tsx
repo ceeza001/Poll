@@ -31,11 +31,6 @@ const EditPoll = () => {
   
   return (
     <div className="p-4">
-      {!poll.isPublished && (
-        <Banner
-          label="This course is unpublished. It will not be visible to the students."
-        />
-      )}
 
       <div className="py-6">
         <div className="flex items-center justify-between">

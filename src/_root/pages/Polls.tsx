@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react"
+
 import { Link } from "react-router-dom";
 
 import { useGetPolls } from "@/lib/react-query/queries";
@@ -7,12 +9,17 @@ import { useUserContext } from "@/context/AuthContext";
 const Polls = () => {
   const { user } = useUserContext();
   const { data: polls } = useGetPolls();
-  
-  if (!polls) return null;
 
+  const [sortedPolls, setSortedPolls] = useState([]);
+  console.log(sortedPolls)
   // Sort polls by creation date in descending order
-  const sortedPolls = [...polls.documents].reverse();
-
+  useEffect(() => {
+    if (polls) {
+      const sortPolls = [...polls?.documents].reverse();
+      setSortedPolls(sortPolls);
+    }
+  }, []);
+ 
   const handleCopyInvitation = (invitationLink: string) => {
     // Copy invitation link to clipboard
     navigator.clipboard.writeText(invitationLink)
@@ -38,17 +45,18 @@ const Polls = () => {
         <h2 className="text-[20px] font-bold text-left w-left">Ongoing polls</h2>
       </div>
 
+      {sortedPolls && (
       <div className="mt-4 grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-6">
         {sortedPolls.map((poll) => (
           <div
-            key={poll.$id}
+            key={poll?.$id}
             className="flex flex-col gap-2 rounded-lg bg-card shadow-md border border-border p-2">
             <div className="w-full h-[2rem] flex items-center justify-between">
               <img 
                 src="/assets/icons/upcoming.svg"
                 className="h-full w-[2rem] dark:invert-white"
               />
-              {poll.creator.$id === user.id && (
+              {poll?.creator?.$id === user.id && (
                 <Link to={`/edit/polls/${poll.$id}`}
                   className="body-bold">
                   Edit
@@ -58,11 +66,11 @@ const Polls = () => {
 
             <div>
               <h2 className="h2-bold">{poll.title}</h2>
-              <p>{poll.description}</p>
+              <p>{poll?.description}</p>
             </div>
 
             <div className="flex-start gap-3 justify-start w-full max-w-5xl">
-              <Link to={`/polls/${poll.$id}`}>
+              <Link to={`/polls/${poll?.$id}`}>
                 <Button className="shad-button_primary">
                   Join
                 </Button>
@@ -77,6 +85,7 @@ const Polls = () => {
           </div>
         ))}
       </div>
+      )}
     </div>
   )
 }
