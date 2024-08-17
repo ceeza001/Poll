@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"
 
 import { useGetPollById } from "@/lib/react-query/queries"
-import { Loader, Banner, Actions } from "@/components/shared"
+import { Loader, Actions } from "@/components/shared"
 import { TitleForm, DescriptionForm, CandidatesForm } from "@/components/forms"
 
 const EditPoll = () => {

@@ -10,15 +10,9 @@ const Polls = () => {
   const { user } = useUserContext();
   const { data: polls } = useGetPolls();
 
-  const [sortedPolls, setSortedPolls] = useState([]);
-  console.log(sortedPolls)
-  // Sort polls by creation date in descending order
-  useEffect(() => {
-    if (polls) {
-      const sortPolls = [...polls?.documents].reverse();
-      setSortedPolls(sortPolls);
-    }
-  }, []);
+  if (!polls) return null;
+  
+  const sortedPolls = [...polls?.documents].reverse();
  
   const handleCopyInvitation = (invitationLink: string) => {
     // Copy invitation link to clipboard
